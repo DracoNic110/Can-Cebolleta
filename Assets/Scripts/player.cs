@@ -26,7 +26,6 @@ public class player : MonoBehaviour
             anim.SetFloat("lastVertical", move.y);
         }
 
-        GetComponent<SpriteRenderer>().sortingOrder = transform.position.y * 100;
     }
 
     void FixedUpdate()
