@@ -1,29 +1,36 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Collider2D))]
 public class ClientBehavior : MonoBehaviour
 {
     [Header("Movimiento")]
     [SerializeField] private float moveSpeed = 2f;
-    [Tooltip("Capa(s) de las mesas (LayerMask)")]
     [SerializeField] private LayerMask tableLayerMask;
+
+    [Header("Pedido")]
+    [SerializeField] private GameObject orderBalloon;
+    [SerializeField] private List<Food> possibleFoods;
+    private SpriteRenderer balloonRenderer;
+    private SpriteRenderer foodRenderer;
+    private Food currentOrder;
 
     private Vector3 targetPosition;
     private Vector3 waitPositionClient;
     private Animator anim;
+
     private bool isDragging = false;
     private bool isWaiting = false;
-    private bool isSeated = false;
     private Coroutine moveCoroutine = null;
 
-    private Table currentTable = null;
     private ClientSpawner spawner = null;
 
     private Collider2D col;
     private Vector3 startDragPosition;
 
-    private void Start() {
+    private void Start()
+    {
         col = GetComponent<Collider2D>();
     }
 
@@ -38,6 +45,16 @@ public class ClientBehavior : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
+
+        if (orderBalloon != null)
+        {
+            balloonRenderer = orderBalloon.GetComponent<SpriteRenderer>();
+            Transform foodTransform = orderBalloon.transform.Find("foodSprite");
+            if (foodTransform != null)
+                foodRenderer = foodTransform.GetComponent<SpriteRenderer>();
+
+            orderBalloon.SetActive(false);
+        }
     }
 
     private void StartMoveToTarget()
@@ -89,16 +106,36 @@ public class ClientBehavior : MonoBehaviour
         {
             seatDropArea.OnClientDrop(this);
         }
-        else {
-            // Si no hay mesa válida, queda en la posición de espera
+        else
+        {
             transform.position = waitPositionClient;
             isWaiting = true;
         }
     }
 
-    public void SitDown(string direction) {
-        isSeated = true;
+    public void SitDown(string direction)
+    {
         anim?.SetTrigger(direction);
+        StartCoroutine(giveOrder());
+    }
+
+    private IEnumerator giveOrder()
+    {
+        float waitTime = Random.Range(5f, 10f);
+        yield return new WaitForSeconds(waitTime);
+
+        if (possibleFoods.Count > 0)
+        {
+            currentOrder = possibleFoods[Random.Range(0, possibleFoods.Count)];
+
+            if (currentOrder != null && foodRenderer != null)
+            {
+                orderBalloon.SetActive(true);
+                foodRenderer.sprite = currentOrder.sprite;
+            }
+
+            Debug.Log($"{name} ha pedido: {currentOrder.name}");
+        }
     }
 
     private Vector3 GetMouseWorldPos()
@@ -108,7 +145,8 @@ public class ClientBehavior : MonoBehaviour
         return p;
     }
 
-    public void Update() {
+    public void Update()
+    {
         anim?.SetBool("isDragging", isDragging);
     }
 }
