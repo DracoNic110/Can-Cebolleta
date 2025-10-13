@@ -14,7 +14,7 @@ public class ClientBehavior : MonoBehaviour
     [SerializeField] private List<Food> possibleFoods;
     private SpriteRenderer balloonRenderer;
     private SpriteRenderer foodRenderer;
-    public Food CurrentOrder;
+    private Food currentOrder;
 
     private Vector3 targetPosition;
     private Vector3 waitPositionClient;
@@ -28,10 +28,6 @@ public class ClientBehavior : MonoBehaviour
 
     private Collider2D col;
     private Vector3 startDragPosition;
-
-    private bool hasOrdered = false;
-    public bool orderTaken = false;
-    public bool HasPendingOrder => CurrentOrder != null && !orderTaken;
 
     private void Start()
     {
@@ -130,42 +126,16 @@ public class ClientBehavior : MonoBehaviour
 
         if (possibleFoods.Count > 0)
         {
-            CurrentOrder = possibleFoods[Random.Range(0, possibleFoods.Count)];
+            currentOrder = possibleFoods[Random.Range(0, possibleFoods.Count)];
 
-            if (CurrentOrder != null && foodRenderer != null)
+            if (currentOrder != null && foodRenderer != null)
             {
                 orderBalloon.SetActive(true);
-                foodRenderer.sprite = CurrentOrder.orderSprite;
+                foodRenderer.sprite = currentOrder.sprite;
             }
 
-            hasOrdered = true;
-            Debug.Log($"{name} ha pedido: {CurrentOrder.name}");
+            Debug.Log($"{name} ha pedido: {currentOrder.name}");
         }
-    }
-
-    public bool IsReadyToTakeOrder()
-    {
-        return hasOrdered && CurrentOrder != null && !orderTaken;
-    }
-
-    public bool HasOrder()
-    {
-        return CurrentOrder != null;
-    }
-
-    public bool IsOrderTaken()
-    {
-        return orderTaken;
-    }
-
-    public Food GetCurrentOrder()
-    {
-        return CurrentOrder;
-    }
-
-    public void MarkOrderTaken()
-    {
-        orderTaken = true;
     }
 
     private Vector3 GetMouseWorldPos()
