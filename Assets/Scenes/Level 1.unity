@@ -3051,7 +3051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e1a0647b7e0104998fbe1e127b40fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenManager
-  foodPrefab: {fileID: 0}
+  foodPrefab: {fileID: 1968113519}
   spawnPoints:
   - {fileID: 122154930}
   - {fileID: 1702962718}
@@ -4729,6 +4729,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1950631441}
   m_CullTransparentMesh: 1
+--- !u!1 &1968113519 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8701566449468492839, guid: 9eea73bfbaa81af4a9fdc2a93cc9a56d, type: 3}
+  m_PrefabInstance: {fileID: 5604083438501539889}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1995848922
 GameObject:
   m_ObjectHideFlags: 0
