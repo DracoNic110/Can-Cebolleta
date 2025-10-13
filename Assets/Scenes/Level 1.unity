@@ -1189,8 +1189,6 @@ MonoBehaviour:
   tableLayerMask:
     serializedVersion: 2
     m_Bits: 8
-<<<<<<< HEAD
-=======
   orderBalloon: {fileID: 1999734532}
   possibleFoods:
   - name: Apple_pie
@@ -1255,7 +1253,6 @@ MonoBehaviour:
     minCookTime: 10
     maxCookTime: 15
   orderTaken: 0
->>>>>>> 601e64606e7942dcf6832a88c12e1bcd58b43f43
 --- !u!61 &480125500
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4016,7 +4013,6 @@ Transform:
   - {fileID: 1514867779}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
 --- !u!1 &1837270777
 GameObject:
   m_ObjectHideFlags: 0
@@ -4092,13 +4088,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837270777}
   m_CullTransparentMesh: 1
-=======
---- !u!1 &1825627099 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8701566449468492839, guid: 9eea73bfbaa81af4a9fdc2a93cc9a56d, type: 3}
-  m_PrefabInstance: {fileID: 5604083438501539889}
-  m_PrefabAsset: {fileID: 0}
->>>>>>> 601e64606e7942dcf6832a88c12e1bcd58b43f43
 --- !u!1 &1847882468
 GameObject:
   m_ObjectHideFlags: 0
