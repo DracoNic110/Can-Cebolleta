@@ -1203,7 +1203,7 @@ MonoBehaviour:
   tableLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  orderBalloon: {fileID: 0}
+  orderBalloon: {fileID: 915685150}
   possibleFoods:
   - name: Apple_pie
     orderSprite: {fileID: -3188074485087870156, guid: 4b3b91d2ec6513040ba6fbb034dc7468, type: 3}
@@ -2364,6 +2364,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1181678559}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &915685150 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8425298765166869529, guid: c04bb0fd1c23f7648a5666f82c4bb352, type: 3}
+  m_PrefabInstance: {fileID: 9061871103435511141}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1006571092
 GameObject:
   m_ObjectHideFlags: 0
@@ -8167,8 +8172,8 @@ SceneRoots:
   - {fileID: 1735225412}
   - {fileID: 583821930}
   - {fileID: 1006571093}
-  - {fileID: 1802589332}
   - {fileID: 685997043}
+  - {fileID: 1802589332}
   - {fileID: 9061871103435511141}
   - {fileID: 1886246983}
   - {fileID: 5604083438501539889}
