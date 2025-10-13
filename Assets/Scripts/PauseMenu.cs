@@ -5,6 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+<<<<<<< Updated upstream
+    [SerializeField] GameObject pauseMenu; 
+
+    public void Pause()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0;
+    }
+    public void Resume()
+    {
+=======
     bool gamePaused = false;
     [SerializeField] GameObject pauseMenu; 
 
@@ -29,6 +40,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         gamePaused = false;
+>>>>>>> Stashed changes
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
     }
