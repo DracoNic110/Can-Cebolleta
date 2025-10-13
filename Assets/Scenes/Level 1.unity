@@ -231,10 +231,10 @@ RectTransform:
   - {fileID: 1324415083}
   m_Father: {fileID: 572585828}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 823, y: -133}
-  m_SizeDelta: {x: 500, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &214348747
 MonoBehaviour:
@@ -280,10 +280,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 302367697}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Resume
-        m_Mode: 1
+      - m_Target: {fileID: 302367695}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -478,14 +478,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 302367696}
-  - component: {fileID: 302367697}
   m_Layer: 0
   m_Name: Pause Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &302367696
 Transform:
   m_ObjectHideFlags: 0
@@ -495,7 +494,7 @@ Transform:
   m_GameObject: {fileID: 302367695}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -116.74542, y: -58.283478, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -503,19 +502,6 @@ Transform:
   - {fileID: 1027523420}
   m_Father: {fileID: 1995848926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &302367697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 302367695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc90616e5a5082c439489425b6a33abe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
-  pauseMenu: {fileID: 302367695}
 --- !u!1 &306816652
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,7 +1023,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 60.55
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1110,7 +1096,9 @@ MonoBehaviour:
   tableLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  orderBalloon: {fileID: 0}
+<<<<<<< HEAD
+=======
+  orderBalloon: {fileID: 1999734532}
   possibleFoods:
   - name: Apple_pie
     sprite: {fileID: -3188074485087870156, guid: 4b3b91d2ec6513040ba6fbb034dc7468, type: 3}
@@ -1144,6 +1132,7 @@ MonoBehaviour:
     minCookTime: 10
     maxCookTime: 15
   orderTaken: 0
+>>>>>>> 601e64606e7942dcf6832a88c12e1bcd58b43f43
 --- !u!61 &480125500
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1489,8 +1478,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc90616e5a5082c439489425b6a33abe, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
-  pauseMenu: {fileID: 302367695}
+  m_EditorClassIdentifier: '::'
 --- !u!1 &572585827
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,8 +1537,8 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 500, y: 200}
-  m_Spacing: {x: 45, y: 0}
+  m_CellSize: {x: 200, y: 200}
+  m_Spacing: {x: 221.7, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 2
 --- !u!1 &583821926
@@ -2272,7 +2260,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 116.74542, y: 58.283478}
   m_SizeDelta: {x: 1200, y: 640}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1027523421
@@ -2887,7 +2875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e1a0647b7e0104998fbe1e127b40fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenManager
-  foodPrefab: {fileID: 0}
+  foodPrefab: {fileID: 1825627099}
   spawnPoints:
   - {fileID: 122154930}
   - {fileID: 1702962718}
@@ -3136,7 +3124,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 40.1
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3838,6 +3826,7 @@ Transform:
   - {fileID: 1514867779}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &1837270777
 GameObject:
   m_ObjectHideFlags: 0
@@ -3872,8 +3861,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2046.1191, y: 1013.4308}
+  m_AnchoredPosition: {x: 116.74542, y: 58.283478}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1837270779
 MonoBehaviour:
@@ -3913,6 +3902,13 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837270777}
   m_CullTransparentMesh: 1
+=======
+--- !u!1 &1825627099 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8701566449468492839, guid: 9eea73bfbaa81af4a9fdc2a93cc9a56d, type: 3}
+  m_PrefabInstance: {fileID: 5604083438501539889}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> 601e64606e7942dcf6832a88c12e1bcd58b43f43
 --- !u!1 &1847882468
 GameObject:
   m_ObjectHideFlags: 0
@@ -4435,10 +4431,10 @@ RectTransform:
   - {fileID: 453385388}
   m_Father: {fileID: 572585828}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 278, y: -133}
-  m_SizeDelta: {x: 500, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1950631443
 MonoBehaviour:
@@ -4484,9 +4480,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 302367697}
+      - m_Target: {fileID: 519420033}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Home
+        m_MethodName: GoHome
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
