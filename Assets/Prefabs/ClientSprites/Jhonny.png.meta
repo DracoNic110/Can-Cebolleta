@@ -4794,6 +4794,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Jhonny_148
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 704
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8faa12e33e5c6870800000000000000
+      internalID: 8677414158965845901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Jhonny_149
       rect:
         serializedVersion: 2
@@ -4811,6 +4833,28 @@ TextureImporter:
       bones: []
       spriteID: 14fe3b2d4cc7cbb80800000000000000
       internalID: -8377684022025523391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jhonny_150
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 704
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4178df91b913723a0800000000000000
+      internalID: -6690324179209844972
       vertices: []
       indices: 
       edges: []
@@ -4838,6 +4882,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Jhonny_152
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 704
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 225f1f1b3cdb52450800000000000000
+      internalID: 6063461121525937442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Jhonny_153
       rect:
         serializedVersion: 2
@@ -4855,6 +4921,28 @@ TextureImporter:
       bones: []
       spriteID: 07fe3b9c104148030800000000000000
       internalID: 3495941208657882992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jhonny_154
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 704
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90612caeb842733d0800000000000000
+      internalID: -3227070424630028791
       vertices: []
       indices: 
       edges: []
@@ -4882,6 +4970,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Jhonny_156
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 704
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ea0aca133d93be70800000000000000
+      internalID: 9129813712428468969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Jhonny_157
       rect:
         serializedVersion: 2
@@ -4899,6 +5009,28 @@ TextureImporter:
       bones: []
       spriteID: 87129d1a8bd6f8590800000000000000
       internalID: -7669791000631893640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jhonny_158
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 704
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9f3a8ae43a19c060800000000000000
+      internalID: 6974134312535474074
       vertices: []
       indices: 
       edges: []
@@ -4926,6 +5058,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Jhonny_160
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 704
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cddb927c0f1d69410800000000000000
+      internalID: 1483603959328914908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Jhonny_161
       rect:
         serializedVersion: 2
@@ -4943,6 +5097,28 @@ TextureImporter:
       bones: []
       spriteID: f707ff8d0be5eb2e0800000000000000
       internalID: -2108143461914939265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jhonny_162
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 704
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ef9bc61afac57d80800000000000000
+      internalID: -8253467566613487641
       vertices: []
       indices: 
       edges: []
@@ -4970,6 +5146,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Jhonny_164
+      rect:
+        serializedVersion: 2
+        x: 1312
+        y: 704
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3832aca7558ab3cd0800000000000000
+      internalID: -2577281276653722749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Jhonny_165
       rect:
         serializedVersion: 2
@@ -4987,6 +5185,28 @@ TextureImporter:
       bones: []
       spriteID: 9ac1252d1ac4d8200800000000000000
       internalID: 183887417694100649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jhonny_166
+      rect:
+        serializedVersion: 2
+        x: 1376
+        y: 704
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ce444b7528c98080800000000000000
+      internalID: -9184589901737996604
       vertices: []
       indices: 
       edges: []
@@ -5014,6 +5234,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Jhonny_168
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 704
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f69a3b179a69c7760800000000000000
+      internalID: 7457000737519937903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Jhonny_169
       rect:
         serializedVersion: 2
@@ -5031,6 +5273,28 @@ TextureImporter:
       bones: []
       spriteID: 7982979cee73c1d80800000000000000
       internalID: -8278680516291909481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jhonny_170
+      rect:
+        serializedVersion: 2
+        x: 1504
+        y: 704
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62241ffc95b4c8870800000000000000
+      internalID: 8686400630403711526
       vertices: []
       indices: 
       edges: []
