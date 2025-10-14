@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class rightChairDropArea : MonoBehaviour, Table
 {
-    private Vector3 sitOffset = new Vector3(0f, 0.6f, 0f);
+    [SerializeField] private Vector3 sitOffset = new Vector3(0f, 0f, 0f);
 
     public void OnClientDrop(ClientBehavior client)
     {
