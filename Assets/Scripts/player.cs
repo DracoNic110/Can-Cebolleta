@@ -12,6 +12,7 @@ public class player : MonoBehaviour
     [SerializeField] KeyCode takeOrderKey = KeyCode.E;
     [SerializeField] float interactionRange = 1.5f;
     [SerializeField] LayerMask clientLayer;
+    [SerializeField] LayerMask foodLayer;
 
 
     Vector3 move;
@@ -46,11 +47,13 @@ public class player : MonoBehaviour
     private void Interaction() {
         if (Input.GetKeyDown(takeOrderKey)) {
             TryTakeOrder();
+            TryTakeFood();
         }
     }
 
     private void TryTakeOrder() {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRange, clientLayer);
+
 
         foreach (var hit in hits)
         {
@@ -69,6 +72,16 @@ public class player : MonoBehaviour
 
         Debug.Log("No hay clientes cercanos con pedidos disponibles.");
     }
+
+    private void TryTakeFood() {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRange, foodLayer);
+
+        foreach (var hit in hits) {
+            Debug.Log("Tomar comida");
+            return;
+        }
+    }
+
 
 
     private void OnDrawGizmosSelected()

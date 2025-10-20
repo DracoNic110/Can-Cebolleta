@@ -251,12 +251,12 @@ TextureImporter:
       name: Chefcito pick up_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -273,12 +273,12 @@ TextureImporter:
       name: Chefcito pick up_1
       rect:
         serializedVersion: 2
-        x: 33
+        x: 32
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -295,12 +295,12 @@ TextureImporter:
       name: Chefcito pick up_2
       rect:
         serializedVersion: 2
-        x: 65
+        x: 64
         y: 0
-        width: 28
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -317,12 +317,12 @@ TextureImporter:
       name: Chefcito pick up_3
       rect:
         serializedVersion: 2
-        x: 97
+        x: 96
         y: 0
-        width: 28
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -339,12 +339,12 @@ TextureImporter:
       name: Chefcito pick up_4
       rect:
         serializedVersion: 2
-        x: 129
+        x: 128
         y: 0
-        width: 28
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -361,12 +361,12 @@ TextureImporter:
       name: Chefcito pick up_5
       rect:
         serializedVersion: 2
-        x: 161
+        x: 160
         y: 0
-        width: 28
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -383,12 +383,12 @@ TextureImporter:
       name: Chefcito pick up_6
       rect:
         serializedVersion: 2
-        x: 193
+        x: 192
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -405,12 +405,12 @@ TextureImporter:
       name: Chefcito pick up_7
       rect:
         serializedVersion: 2
-        x: 225
+        x: 224
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -427,12 +427,12 @@ TextureImporter:
       name: Chefcito pick up_8
       rect:
         serializedVersion: 2
-        x: 257
+        x: 256
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -449,12 +449,12 @@ TextureImporter:
       name: Chefcito pick up_9
       rect:
         serializedVersion: 2
-        x: 289
+        x: 288
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -471,12 +471,12 @@ TextureImporter:
       name: Chefcito pick up_10
       rect:
         serializedVersion: 2
-        x: 321
+        x: 320
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -493,12 +493,12 @@ TextureImporter:
       name: Chefcito pick up_11
       rect:
         serializedVersion: 2
-        x: 353
+        x: 352
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -515,12 +515,12 @@ TextureImporter:
       name: Chefcito pick up_12
       rect:
         serializedVersion: 2
-        x: 383
+        x: 384
         y: 0
-        width: 34
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -537,12 +537,12 @@ TextureImporter:
       name: Chefcito pick up_13
       rect:
         serializedVersion: 2
-        x: 417
+        x: 416
         y: 0
         width: 32
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -559,12 +559,12 @@ TextureImporter:
       name: Chefcito pick up_14
       rect:
         serializedVersion: 2
-        x: 449
+        x: 448
         y: 0
         width: 32
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -581,12 +581,12 @@ TextureImporter:
       name: Chefcito pick up_15
       rect:
         serializedVersion: 2
-        x: 481
+        x: 480
         y: 0
         width: 32
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -603,12 +603,12 @@ TextureImporter:
       name: Chefcito pick up_16
       rect:
         serializedVersion: 2
-        x: 513
+        x: 512
         y: 0
         width: 32
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -625,12 +625,12 @@ TextureImporter:
       name: Chefcito pick up_17
       rect:
         serializedVersion: 2
-        x: 545
+        x: 544
         y: 0
         width: 32
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -647,12 +647,12 @@ TextureImporter:
       name: Chefcito pick up_18
       rect:
         serializedVersion: 2
-        x: 577
+        x: 576
         y: 0
         width: 32
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -669,12 +669,12 @@ TextureImporter:
       name: Chefcito pick up_19
       rect:
         serializedVersion: 2
-        x: 609
+        x: 608
         y: 0
         width: 32
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -691,12 +691,12 @@ TextureImporter:
       name: Chefcito pick up_20
       rect:
         serializedVersion: 2
-        x: 641
+        x: 640
         y: 0
         width: 32
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -713,12 +713,12 @@ TextureImporter:
       name: Chefcito pick up_21
       rect:
         serializedVersion: 2
-        x: 673
+        x: 672
         y: 0
         width: 32
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -735,12 +735,12 @@ TextureImporter:
       name: Chefcito pick up_22
       rect:
         serializedVersion: 2
-        x: 705
+        x: 704
         y: 0
-        width: 64
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -757,12 +757,12 @@ TextureImporter:
       name: Chefcito pick up_23
       rect:
         serializedVersion: 2
-        x: 771
+        x: 736
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -779,12 +779,12 @@ TextureImporter:
       name: Chefcito pick up_24
       rect:
         serializedVersion: 2
-        x: 803
+        x: 768
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -801,12 +801,12 @@ TextureImporter:
       name: Chefcito pick up_25
       rect:
         serializedVersion: 2
-        x: 835
+        x: 800
         y: 0
-        width: 28
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -823,12 +823,12 @@ TextureImporter:
       name: Chefcito pick up_26
       rect:
         serializedVersion: 2
-        x: 867
+        x: 832
         y: 0
-        width: 28
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -845,12 +845,12 @@ TextureImporter:
       name: Chefcito pick up_27
       rect:
         serializedVersion: 2
-        x: 899
+        x: 864
         y: 0
-        width: 28
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -867,12 +867,12 @@ TextureImporter:
       name: Chefcito pick up_28
       rect:
         serializedVersion: 2
-        x: 931
+        x: 896
         y: 0
-        width: 28
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -889,12 +889,12 @@ TextureImporter:
       name: Chefcito pick up_29
       rect:
         serializedVersion: 2
-        x: 963
+        x: 928
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -911,12 +911,12 @@ TextureImporter:
       name: Chefcito pick up_30
       rect:
         serializedVersion: 2
-        x: 995
+        x: 960
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -933,12 +933,12 @@ TextureImporter:
       name: Chefcito pick up_31
       rect:
         serializedVersion: 2
-        x: 1027
+        x: 992
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -955,12 +955,12 @@ TextureImporter:
       name: Chefcito pick up_32
       rect:
         serializedVersion: 2
-        x: 1059
+        x: 1024
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -977,12 +977,12 @@ TextureImporter:
       name: Chefcito pick up_33
       rect:
         serializedVersion: 2
-        x: 1091
+        x: 1056
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -999,12 +999,12 @@ TextureImporter:
       name: Chefcito pick up_34
       rect:
         serializedVersion: 2
-        x: 1123
+        x: 1088
         y: 0
-        width: 28
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1021,12 +1021,12 @@ TextureImporter:
       name: Chefcito pick up_35
       rect:
         serializedVersion: 2
-        x: 1151
+        x: 1120
         y: 0
-        width: 64
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1043,12 +1043,12 @@ TextureImporter:
       name: Chefcito pick up_36
       rect:
         serializedVersion: 2
-        x: 1215
+        x: 1152
         y: 0
         width: 32
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1065,12 +1065,12 @@ TextureImporter:
       name: Chefcito pick up_37
       rect:
         serializedVersion: 2
-        x: 1247
+        x: 1184
         y: 0
         width: 32
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1087,12 +1087,12 @@ TextureImporter:
       name: Chefcito pick up_38
       rect:
         serializedVersion: 2
-        x: 1279
+        x: 1216
         y: 0
         width: 32
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1109,12 +1109,12 @@ TextureImporter:
       name: Chefcito pick up_39
       rect:
         serializedVersion: 2
-        x: 1311
+        x: 1248
         y: 0
         width: 32
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1131,12 +1131,12 @@ TextureImporter:
       name: Chefcito pick up_40
       rect:
         serializedVersion: 2
-        x: 1343
+        x: 1280
         y: 0
         width: 32
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1153,12 +1153,12 @@ TextureImporter:
       name: Chefcito pick up_41
       rect:
         serializedVersion: 2
-        x: 1375
+        x: 1312
         y: 0
         width: 32
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1175,12 +1175,12 @@ TextureImporter:
       name: Chefcito pick up_42
       rect:
         serializedVersion: 2
-        x: 1407
+        x: 1344
         y: 0
         width: 32
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1197,12 +1197,12 @@ TextureImporter:
       name: Chefcito pick up_43
       rect:
         serializedVersion: 2
-        x: 1439
+        x: 1376
         y: 0
         width: 32
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1219,12 +1219,12 @@ TextureImporter:
       name: Chefcito pick up_44
       rect:
         serializedVersion: 2
-        x: 1471
+        x: 1408
         y: 0
         width: 32
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1241,12 +1241,12 @@ TextureImporter:
       name: Chefcito pick up_45
       rect:
         serializedVersion: 2
-        x: 1503
+        x: 1440
         y: 0
-        width: 33
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1259,11 +1259,55 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Chefcito pick up_46
+      rect:
+        serializedVersion: 2
+        x: 1472
+        y: 0
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afbd50cff91882c49ad6e83487a7f2e2
+      internalID: 63929240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chefcito pick up_47
+      rect:
+        serializedVersion: 2
+        x: 1504
+        y: 0
+        width: 32
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb36fd38321661147a5cd514afb6d5c8
+      internalID: -1384354732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 9c9593a5466253949a76ab221adc01ab
     internalID: 0
     vertices: []
     indices: 
@@ -1271,7 +1315,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Chefcito pick up_0: 125320912516247434
       Chefcito pick up_1: 5911338750047020819
@@ -1314,6 +1360,8 @@ TextureImporter:
       Chefcito pick up_43: 389632223656169062
       Chefcito pick up_44: 8880009216831160504
       Chefcito pick up_45: -1562483758770151654
+      Chefcito pick up_46: 63929240
+      Chefcito pick up_47: -1384354732
       Chefcito pick up_5: -1563418727123160902
       Chefcito pick up_6: -4755273405015833701
       Chefcito pick up_7: 4111031010119892631
