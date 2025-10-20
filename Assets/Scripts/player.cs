@@ -14,7 +14,6 @@ public class player : MonoBehaviour
     [SerializeField] LayerMask clientLayer;
     [SerializeField] LayerMask foodLayer;
 
-
     Vector3 move;
     KitchenManager kitchenManager;
 
@@ -78,6 +77,7 @@ public class player : MonoBehaviour
 
         foreach (var hit in hits) {
             Debug.Log("Tomar comida");
+            anim.SetTrigger("pickUp");
             return;
         }
     }
