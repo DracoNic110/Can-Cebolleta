@@ -14,8 +14,18 @@ public class player : MonoBehaviour
     [SerializeField] LayerMask clientLayer;
     [SerializeField] LayerMask foodLayer;
 
+    [Header("Puntos de las manos del chef")]
+    [SerializeField] Transform dishPositionUp;
+    [SerializeField] Transform dishPositionDown;
+    [SerializeField] Transform dishPositionLeft;
+    [SerializeField] Transform dishPositionRight;
+    Transform currentHandPoint;
+    GameObject food;
+
     Vector3 move;
     KitchenManager kitchenManager;
+
+    bool isPickingUp = false;
 
     private void Start() {
         kitchenManager = FindFirstObjectByType<KitchenManager>();
@@ -28,6 +38,10 @@ public class player : MonoBehaviour
     }
 
     private void Movement() {
+        if (isPickingUp) {
+            anim.SetBool("isMoving", false);
+            return;
+        }
         move = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0f).normalized;
 
         anim.SetFloat("horizontal", move.x);
@@ -77,11 +91,44 @@ public class player : MonoBehaviour
 
         foreach (var hit in hits) {
             Debug.Log("Tomar comida");
-            anim.SetTrigger("pickUp");
+            isPickingUp = true;
+            anim.SetBool("isPickingUp", isPickingUp);
+            Invoke(nameof(EndPickUp), 0.8f);
             return;
         }
     }
 
+    private void pickUpFood() {
+        if (food != null) Destroy(food);
+
+        float lastH = anim.GetFloat("lastHorizontal");
+        float lastV = anim.GetFloat("lastVertical");
+
+        if (Mathf.Abs(lastH) > Mathf.Abs(lastV))
+        {
+            currentHandPoint = (lastH > 0) ? dishPositionRight : dishPositionLeft;
+        }
+        else
+        {
+            currentHandPoint = (lastV > 0) ? dishPositionUp : dishPositionDown;
+        }
+
+        food = Instantiate(food, currentHandPoint.position, Quaternion.identity, currentHandPoint.transform);
+        food.GetComponent<Collider2D>().enabled = false;
+        food.GetComponent<Rigidbody2D>().simulated = false;
+
+        SpriteRenderer foodSprite = food.GetComponent<SpriteRenderer>();
+        if (foodSprite != null)
+        {
+            foodSprite.sortingOrder = 10;
+        }
+    }
+
+    private void EndPickUp()
+    {
+        isPickingUp = false;
+        anim.SetBool("isPickingUp", isPickingUp);
+    }
 
 
     private void OnDrawGizmosSelected()
@@ -95,6 +142,5 @@ public class player : MonoBehaviour
     {
         rb2D.MovePosition(transform.position + (move * speed * Time.fixedDeltaTime));
     }
-
 
 }

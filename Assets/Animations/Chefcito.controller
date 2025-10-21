@@ -11,6 +11,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: isMoving
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isPickingUp
+    m_EventTreshold: 0
+  - m_ConditionMode: 4
+    m_ConditionEvent: lastHorizontal
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7009024756158929289}
   m_Solo: 0
@@ -143,7 +149,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: pickUp
+    m_ConditionEvent: isPickingUp
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7948548237153630832}
@@ -169,6 +175,12 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 2
     m_ConditionEvent: isMoving
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isPickingUp
+    m_EventTreshold: 0
+  - m_ConditionMode: 4
+    m_ConditionEvent: lastVertical
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2144485168779884773}
@@ -273,6 +285,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isMoving
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isPickingUp
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7435547033782510955}
   m_Solo: 0
@@ -326,8 +341,8 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: pickUp
-    m_Type: 9
+  - m_Name: isPickingUp
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -384,6 +399,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: isMoving
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isPickingUp
+    m_EventTreshold: 0
+  - m_ConditionMode: 3
+    m_ConditionEvent: lastHorizontal
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 164161990689491606}
   m_Solo: 0
@@ -438,8 +459,8 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: horizontal
     m_Mirror: 0
-  m_BlendParameter: horizontal
-  m_BlendParameterY: vertical
+  m_BlendParameter: lastHorizontal
+  m_BlendParameterY: lastVertical
   m_MinThreshold: 0
   m_MaxThreshold: 1
   m_UseAutomaticThresholds: 1
@@ -483,6 +504,12 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 2
     m_ConditionEvent: isMoving
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isPickingUp
+    m_EventTreshold: 0
+  - m_ConditionMode: 3
+    m_ConditionEvent: lastVertical
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6917584632253682874}
@@ -563,7 +590,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: pickUp
+    m_ConditionEvent: isPickingUp
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7948548237153630832}
@@ -614,7 +641,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: isPickingUp
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7948548237153630832}
   m_Solo: 0
@@ -716,7 +746,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: pickUp
+    m_ConditionEvent: isPickingUp
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7948548237153630832}
@@ -778,7 +808,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: pickUp
+    m_ConditionEvent: isPickingUp
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7948548237153630832}
