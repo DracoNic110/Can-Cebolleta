@@ -26,6 +26,9 @@ public class player : MonoBehaviour
     KitchenManager kitchenManager;
 
     bool isPickingUp = false;
+    bool isHolding = false;
+    GameObject foodPicked;
+    Sprite tempFoodData;
 
     private void Start() {
         kitchenManager = FindFirstObjectByType<KitchenManager>();
@@ -35,6 +38,7 @@ public class player : MonoBehaviour
     {
         Movement();
         Interaction();
+        if (isHolding && food != null) UpdateHoldPosition();
     }
 
     private void Movement() {
@@ -91,36 +95,15 @@ public class player : MonoBehaviour
 
         foreach (var hit in hits) {
             Debug.Log("Tomar comida");
+            foodPicked = hit.gameObject;
+            SpriteRenderer sr = foodPicked.GetComponent<SpriteRenderer>();
+            if (sr != null) tempFoodData = sr.sprite;
+            if (kitchenManager != null) kitchenManager.RemoveOrder(foodPicked);
             isPickingUp = true;
             anim.SetBool("isPickingUp", isPickingUp);
             Invoke(nameof(EndPickUp), 0.8f);
+            Invoke(nameof(FinalizePickUp), 0.8f);
             return;
-        }
-    }
-
-    private void pickUpFood() {
-        if (food != null) Destroy(food);
-
-        float lastH = anim.GetFloat("lastHorizontal");
-        float lastV = anim.GetFloat("lastVertical");
-
-        if (Mathf.Abs(lastH) > Mathf.Abs(lastV))
-        {
-            currentHandPoint = (lastH > 0) ? dishPositionRight : dishPositionLeft;
-        }
-        else
-        {
-            currentHandPoint = (lastV > 0) ? dishPositionUp : dishPositionDown;
-        }
-
-        food = Instantiate(food, currentHandPoint.position, Quaternion.identity, currentHandPoint.transform);
-        food.GetComponent<Collider2D>().enabled = false;
-        food.GetComponent<Rigidbody2D>().simulated = false;
-
-        SpriteRenderer foodSprite = food.GetComponent<SpriteRenderer>();
-        if (foodSprite != null)
-        {
-            foodSprite.sortingOrder = 10;
         }
     }
 
@@ -130,6 +113,79 @@ public class player : MonoBehaviour
         anim.SetBool("isPickingUp", isPickingUp);
     }
 
+
+    private void FinalizePickUp()
+    {
+        if (tempFoodData == null)
+        {
+            Debug.LogWarning("No hay sprite de comida para instanciar en las manos.");
+            return;
+        }
+        float lastH = anim.GetFloat("lastHorizontal");
+        float lastV = anim.GetFloat("lastVertical");
+
+        if (Mathf.Abs(lastH) > Mathf.Abs(lastV))
+            currentHandPoint = (lastH > 0) ? dishPositionRight : dishPositionLeft;
+        else
+            currentHandPoint = (lastV > 0) ? dishPositionUp : dishPositionDown;
+        GameObject newFood = new GameObject("FoodInHand");
+        newFood.transform.SetParent(currentHandPoint);
+        newFood.transform.localPosition = Vector3.zero;
+        SpriteRenderer sr = newFood.AddComponent<SpriteRenderer>();
+        sr.sprite = tempFoodData;
+        sr.sortingLayerName = "Foreground";
+        food = newFood;
+        isHolding = true;
+        anim.SetBool("isHolding", isHolding);
+        foodPicked = null;
+        tempFoodData = null;
+    }
+
+    private void UpdateHoldPosition()
+    {
+        float lastH = anim.GetFloat("lastHorizontal");
+        float lastV = anim.GetFloat("lastVertical");
+        bool isMoving = anim.GetBool("isMoving");
+
+        Transform targetPoint;
+
+        if (!isMoving)
+        {
+            targetPoint = dishPositionDown;
+        }
+        else if (Mathf.Abs(lastH) > Mathf.Abs(lastV))
+        {
+            targetPoint = (lastH > 0) ? dishPositionRight : dishPositionLeft;
+        }
+        else
+        {
+            targetPoint = (lastV > 0) ? dishPositionUp : dishPositionDown;
+        }
+        if (currentHandPoint != targetPoint)
+        {
+            currentHandPoint = targetPoint;
+            food.transform.SetParent(currentHandPoint);
+            food.transform.localPosition = Vector3.zero;
+        }
+
+        AdjustFoodSortingOrder(targetPoint);
+    }
+
+
+    private void AdjustFoodSortingOrder(Transform targetPoint)
+    {
+        SpriteRenderer sr = food.GetComponent<SpriteRenderer>();
+        SpriteRenderer playerSr = GetComponent<SpriteRenderer>();
+        if (sr == null || playerSr == null) return;
+        if (targetPoint == dishPositionDown)
+        {
+            sr.sortingOrder = playerSr.sortingOrder + 1;
+        }
+        else
+        {
+            sr.sortingOrder = playerSr.sortingOrder;
+        }
+    }
 
     private void OnDrawGizmosSelected()
     {
