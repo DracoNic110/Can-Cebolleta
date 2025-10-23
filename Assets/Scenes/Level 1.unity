@@ -7366,6 +7366,10 @@ PrefabInstance:
       propertyPath: dishPositionRight
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8500683487047441811, guid: c4733e9dab38816458b08e3fe5c524cc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -6994850297461586538, guid: 157643a7a1e48dc44a8426d615eff664, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
