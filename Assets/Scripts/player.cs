@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class player : MonoBehaviour
 {
@@ -8,7 +8,7 @@ public class player : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] float speed;
 
-    [Header("Interacci�n con clientes")]
+    [Header("Interacción con clientes")]
     [SerializeField] KeyCode takeOrderKey = KeyCode.E;
     [SerializeField] float interactionRange = 1.5f;
     [SerializeField] LayerMask clientLayer;
@@ -28,7 +28,7 @@ public class player : MonoBehaviour
     bool isPickingUp = false;
     bool isHolding = false;
     GameObject foodPicked;
-    Sprite tempFoodData;
+    Food tempFoodData;
 
     private void Start() {
         kitchenManager = FindFirstObjectByType<KitchenManager>();
@@ -42,8 +42,11 @@ public class player : MonoBehaviour
     }
 
     private void Movement() {
+
+
         if (isPickingUp) {
             anim.SetBool("isMoving", false);
+            move = Vector3.zero;
             return;
         }
         move = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0f).normalized;
@@ -61,14 +64,31 @@ public class player : MonoBehaviour
         }
     }
 
-    private void Interaction() {
-        if (Input.GetKeyDown(takeOrderKey)) {
-            TryTakeOrder();
-            TryTakeFood();
+    private void Interaction()
+    {
+        if (Input.GetKeyDown(takeOrderKey))
+        {
+            if (isHolding)
+            {
+                TryDeliverFood();
+            }
+            else
+            {
+                TryTakeOrder();
+                TryTakeFood();
+            }
         }
     }
 
+
     private void TryTakeOrder() {
+        if (isHolding || isPickingUp)
+        {
+            Debug.Log("No puedes tomar pedidos mientras sostienes un plato.");
+            return;
+        }
+
+
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRange, clientLayer);
 
 
@@ -90,15 +110,34 @@ public class player : MonoBehaviour
         Debug.Log("No hay clientes cercanos con pedidos disponibles.");
     }
 
-    private void TryTakeFood() {
+    private void TryTakeFood()
+    {
+        if (isHolding || isPickingUp)
+        {
+            Debug.Log("No puedes recoger otro plato mientras sostienes uno o estás recogiendo.");
+            return;
+        }
+
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRange, foodLayer);
 
-        foreach (var hit in hits) {
-            Debug.Log("Tomar comida");
+        foreach (var hit in hits)
+        {
             foodPicked = hit.gameObject;
-            SpriteRenderer sr = foodPicked.GetComponent<SpriteRenderer>();
-            if (sr != null) tempFoodData = sr.sprite;
+
+            Dish dishComp = foodPicked.GetComponent<Dish>();
+            if (dishComp != null && dishComp.FoodData != null)
+            {
+                tempFoodData = dishComp.FoodData;
+                Debug.Log($"Datos de comida asignados correctamente: {tempFoodData.name}");
+            }
+            else
+            {
+                Debug.LogWarning("El plato no tiene datos de comida asignados en Dish.");
+                return;
+            }
+
             if (kitchenManager != null) kitchenManager.RemoveOrder(foodPicked);
+
             isPickingUp = true;
             anim.SetBool("isPickingUp", isPickingUp);
             Invoke(nameof(EndPickUp), 0.8f);
@@ -106,6 +145,8 @@ public class player : MonoBehaviour
             return;
         }
     }
+
+
 
     private void EndPickUp()
     {
@@ -118,9 +159,10 @@ public class player : MonoBehaviour
     {
         if (tempFoodData == null)
         {
-            Debug.LogWarning("No hay sprite de comida para instanciar en las manos.");
+            Debug.LogWarning("No hay datos de comida para instanciar en las manos.");
             return;
         }
+
         float lastH = anim.GetFloat("lastHorizontal");
         float lastV = anim.GetFloat("lastVertical");
 
@@ -128,18 +170,28 @@ public class player : MonoBehaviour
             currentHandPoint = (lastH > 0) ? dishPositionRight : dishPositionLeft;
         else
             currentHandPoint = (lastV > 0) ? dishPositionUp : dishPositionDown;
+
         GameObject newFood = new GameObject("FoodInHand");
         newFood.transform.SetParent(currentHandPoint);
         newFood.transform.localPosition = Vector3.zero;
+
         SpriteRenderer sr = newFood.AddComponent<SpriteRenderer>();
-        sr.sprite = tempFoodData;
+        sr.sprite = tempFoodData.dishSprite;
         sr.sortingLayerName = "Foreground";
+
+        Dish dishComp = newFood.AddComponent<Dish>();
+        dishComp.FoodData = tempFoodData;
+
         food = newFood;
         isHolding = true;
         anim.SetBool("isHolding", isHolding);
+
         foodPicked = null;
         tempFoodData = null;
     }
+
+
+
 
     private void UpdateHoldPosition()
     {
@@ -161,6 +213,7 @@ public class player : MonoBehaviour
         {
             targetPoint = (lastV > 0) ? dishPositionUp : dishPositionDown;
         }
+
         if (currentHandPoint != targetPoint)
         {
             currentHandPoint = targetPoint;
@@ -168,8 +221,22 @@ public class player : MonoBehaviour
             food.transform.localPosition = Vector3.zero;
         }
 
-        AdjustFoodSortingOrder(targetPoint);
+        SpriteRenderer sr = food.GetComponent<SpriteRenderer>();
+        SpriteRenderer playerSr = GetComponent<SpriteRenderer>();
+        if (sr == null || playerSr == null) return;
+
+        if (targetPoint == dishPositionDown)
+        {
+            sr.sortingOrder = playerSr.sortingOrder + 2;
+        }
+        else
+        {
+            sr.sortingOrder = playerSr.sortingOrder - 1;
+        }
+
+        sr.sortingLayerName = "Foreground";
     }
+
 
 
     private void AdjustFoodSortingOrder(Transform targetPoint)
@@ -187,15 +254,95 @@ public class player : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void TryDeliverFood()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, interactionRange);
+        if (!isHolding || food == null)
+            return;
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRange, clientLayer);
+
+        foreach (var hit in hits)
+        {
+            ClientBehavior client = hit.GetComponent<ClientBehavior>();
+            if (client == null) continue;
+
+            Dish holdDishComp = food.GetComponent<Dish>();
+            if (holdDishComp == null || holdDishComp.FoodData == null)
+            {
+                Debug.LogWarning("El plato en mano no tiene datos de comida válidos.");
+                return;
+            }
+
+            if (client.HasOrder() && holdDishComp.FoodData == client.GetCurrentOrder())
+            {
+                PlaceDishOnTable(client, holdDishComp.FoodData);
+                client.MarkOrderTaken();
+
+                Destroy(food);
+                food = null;
+                isHolding = false;
+                anim.SetBool("isHolding", false);
+
+                Debug.Log($"✅ Plato '{holdDishComp.FoodData.name}' entregado correctamente a {client.name}");
+                return;
+            }
+            else
+            {
+                Debug.Log($"❌ El cliente {client.name} pidió {client.GetCurrentOrder().name}, pero tienes {holdDishComp.FoodData.name}");
+            }
+        }
     }
+
+
+    private void PlaceDishOnTable(ClientBehavior client, Food foodData)
+    {
+        Transform tableTransform = client.assignedTableTransform;
+        if (tableTransform == null)
+        {
+            Debug.LogWarning($"El cliente {client.name} no tiene mesa asignada.");
+            return;
+        }
+
+        Transform leftPoint = tableTransform.Find("dishPointLeft");
+        Transform rightPoint = tableTransform.Find("dishPointRight");
+
+        if (leftPoint == null && rightPoint == null)
+        {
+            Debug.LogWarning($"La mesa de {client.name} no tiene dishPoints asignados.");
+            return;
+        }
+
+        Transform chosenPoint = client.seatSide == ClientBehavior.SeatSide.Left ? leftPoint : rightPoint;
+
+        GameObject servedDish = Instantiate(food, chosenPoint.position, Quaternion.identity, chosenPoint);
+
+        Dish dishComp = servedDish.GetComponent<Dish>();
+        if (dishComp == null)
+            dishComp = servedDish.AddComponent<Dish>();
+        dishComp.AssignOrder(client);
+
+        SpriteRenderer sr = servedDish.GetComponent<SpriteRenderer>();
+        SpriteRenderer playerSr = GetComponent<SpriteRenderer>();
+
+        if (sr != null)
+        {
+            sr.sortingLayerName = "Foreground";
+
+            if (client.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("sitLeft"))
+                sr.sortingOrder = playerSr.sortingOrder + 1;
+            else if (client.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("sitRight"))
+                sr.sortingOrder = playerSr.sortingOrder + 1;
+            else
+                sr.sortingOrder = playerSr.sortingOrder + 1;
+        }
+
+    }
+
 
 
     void FixedUpdate()
     {
+        if (isPickingUp) return;
         rb2D.MovePosition(transform.position + (move * speed * Time.fixedDeltaTime));
     }
 

@@ -9,6 +9,12 @@ public class ClientBehavior : MonoBehaviour
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private LayerMask tableLayerMask;
 
+    [Header("Sentarse en mesas")]
+    public Table assignedTable;
+    public Transform assignedTableTransform;
+    public enum SeatSide { Left, Right }
+    public SeatSide seatSide;
+
     [Header("Pedido")]
     [SerializeField] private GameObject orderBalloon;
     [SerializeField] private List<Food> possibleFoods;
@@ -28,6 +34,7 @@ public class ClientBehavior : MonoBehaviour
 
     private Collider2D col;
     private Vector3 startDragPosition;
+
 
     private bool hasOrdered = false;
     public bool orderTaken = false;
@@ -117,8 +124,9 @@ public class ClientBehavior : MonoBehaviour
         }
     }
 
-    public void SitDown(string direction)
+    public void SitDown(string direction, Table table)
     {
+        assignedTable = table;
         anim?.SetTrigger(direction);
         StartCoroutine(giveOrder());
     }

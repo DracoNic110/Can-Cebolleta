@@ -40,15 +40,22 @@ public class KitchenManager : MonoBehaviour
         yield return new WaitForSeconds(cookTime);
 
         GameObject foodObj = Instantiate(foodPrefab, order.spawnPoint.position, Quaternion.identity);
+
         SpriteRenderer sr = foodObj.GetComponent<SpriteRenderer>();
         if (sr != null)
             sr.sprite = order.food.dishSprite;
+
+        Dish dishComp = foodObj.GetComponent<Dish>();
+        if (dishComp == null)
+            dishComp = foodObj.AddComponent<Dish>();
+        dishComp.Initialize(order.food);
 
         order.ready = true;
         order.instance = foodObj;
 
         Debug.Log($"Pedido listo: {order.food.name}");
     }
+
 
     private Transform GetAvailableSpawnPoint()
     {

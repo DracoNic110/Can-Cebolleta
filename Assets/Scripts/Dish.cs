@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class Dish : MonoBehaviour
 {
-    ClientBehavior clientOwner;
-    Food food;
+    public ClientBehavior clientOwner;
+    public Food FoodData;
 
     public void AssignOrder(ClientBehavior client)
     {
         clientOwner = client;
-        food = client.CurrentOrder;
+        FoodData = client.CurrentOrder;
+    }
+
+    public void Initialize(Food food)
+    {
+        FoodData = food;
     }
 }

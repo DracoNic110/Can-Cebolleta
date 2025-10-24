@@ -764,6 +764,8 @@ MonoBehaviour:
   tableLayerMask:
     serializedVersion: 2
     m_Bits: 8
+  assignedTableTransform: {fileID: 0}
+  seatSide: 0
   orderBalloon: {fileID: 915685150}
   possibleFoods:
   - name: Apple_pie
@@ -2393,6 +2395,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 601684425}
     m_Modifications:
     - target: {fileID: 660053639028708515, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: parentTable
+      value: 
+      objectReference: {fileID: 1621892878}
+    - target: {fileID: 660053639028708515, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: sitOffset.y
       value: -1
       objectReference: {fileID: 0}
@@ -2400,9 +2406,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Table (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2259445198921181957, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961151486228638159, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: parentTable
+      value: 
+      objectReference: {fileID: 1621892878}
     - target: {fileID: 2961151486228638159, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: sitOffset.y
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3912480183078412415, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: m_Name
+      value: dishPointRight
       objectReference: {fileID: 0}
     - target: {fileID: 8264398062410765725, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2443,6 +2461,10 @@ PrefabInstance:
     - target: {fileID: 8264398062410765725, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8952744865864598171, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.85
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3752,6 +3774,25 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &1968113525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968113519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2725d1ae36ed3b14da3e9b59355eb0fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dish
+  clientOwner: {fileID: 0}
+  FoodData:
+    name: 
+    orderSprite: {fileID: 0}
+    dishSprite: {fileID: 0}
+    minCookTime: 10
+    maxCookTime: 15
 --- !u!1 &1995848922
 GameObject:
   m_ObjectHideFlags: 0
@@ -3925,6 +3966,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 601684425}
     m_Modifications:
     - target: {fileID: 660053639028708515, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: parentTable
+      value: 
+      objectReference: {fileID: 1707974661}
+    - target: {fileID: 660053639028708515, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: sitOffset.y
       value: -1
       objectReference: {fileID: 0}
@@ -3932,9 +3977,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Table
       objectReference: {fileID: 0}
+    - target: {fileID: 2259445198921181957, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961151486228638159, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: parentTable
+      value: 
+      objectReference: {fileID: 1707974661}
     - target: {fileID: 2961151486228638159, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: sitOffset.y
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3912480183078412415, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: m_Name
+      value: dishPointRight
       objectReference: {fileID: 0}
     - target: {fileID: 8264398062410765725, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3975,6 +4032,10 @@ PrefabInstance:
     - target: {fileID: 8264398062410765725, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8952744865864598171, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.85
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6919,6 +6980,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 601684425}
     m_Modifications:
     - target: {fileID: 660053639028708515, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: parentTable
+      value: 
+      objectReference: {fileID: 993664283}
+    - target: {fileID: 660053639028708515, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: sitOffset.y
       value: -1
       objectReference: {fileID: 0}
@@ -6926,9 +6991,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Table (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2259445198921181957, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961151486228638159, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: parentTable
+      value: 
+      objectReference: {fileID: 993664283}
     - target: {fileID: 2961151486228638159, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: sitOffset.y
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3912480183078412415, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: m_Name
+      value: dishPointRight
       objectReference: {fileID: 0}
     - target: {fileID: 8264398062410765725, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6969,6 +7046,10 @@ PrefabInstance:
     - target: {fileID: 8264398062410765725, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8952744865864598171, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.85
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7250,6 +7331,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 601684425}
     m_Modifications:
     - target: {fileID: 660053639028708515, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: parentTable
+      value: 
+      objectReference: {fileID: 1031757938}
+    - target: {fileID: 660053639028708515, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: sitOffset.y
       value: -1
       objectReference: {fileID: 0}
@@ -7257,9 +7342,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Table (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2259445198921181957, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961151486228638159, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: parentTable
+      value: 
+      objectReference: {fileID: 1031757938}
     - target: {fileID: 2961151486228638159, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: sitOffset.y
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3912480183078412415, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: m_Name
+      value: dishPointRight
       objectReference: {fileID: 0}
     - target: {fileID: 8264398062410765725, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7300,6 +7397,10 @@ PrefabInstance:
     - target: {fileID: 8264398062410765725, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8952744865864598171, guid: 5822de5c013457d4f87e9241d877c580, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.85
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7510,6 +7611,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8701566449468492839, guid: 9eea73bfbaa81af4a9fdc2a93cc9a56d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1968113522}
+    - targetCorrespondingSourceObject: {fileID: 8701566449468492839, guid: 9eea73bfbaa81af4a9fdc2a93cc9a56d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1968113525}
   m_SourcePrefab: {fileID: 100100000, guid: 9eea73bfbaa81af4a9fdc2a93cc9a56d, type: 3}
 --- !u!1001 &9061871103435511141
 PrefabInstance:
