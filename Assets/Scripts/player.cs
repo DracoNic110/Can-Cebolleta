@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class player : MonoBehaviour
 {
@@ -178,6 +180,7 @@ public class player : MonoBehaviour
         SpriteRenderer sr = newFood.AddComponent<SpriteRenderer>();
         sr.sprite = tempFoodData.dishSprite;
         sr.sortingLayerName = "Foreground";
+        sr.sortingOrder = 1;
 
         Dish dishComp = newFood.AddComponent<Dish>();
         dishComp.FoodData = tempFoodData;
@@ -189,9 +192,6 @@ public class player : MonoBehaviour
         foodPicked = null;
         tempFoodData = null;
     }
-
-
-
 
     private void UpdateHoldPosition()
     {
@@ -219,38 +219,6 @@ public class player : MonoBehaviour
             currentHandPoint = targetPoint;
             food.transform.SetParent(currentHandPoint);
             food.transform.localPosition = Vector3.zero;
-        }
-
-        SpriteRenderer sr = food.GetComponent<SpriteRenderer>();
-        SpriteRenderer playerSr = GetComponent<SpriteRenderer>();
-        if (sr == null || playerSr == null) return;
-
-        if (targetPoint == dishPositionDown)
-        {
-            sr.sortingOrder = playerSr.sortingOrder + 2;
-        }
-        else
-        {
-            sr.sortingOrder = playerSr.sortingOrder - 1;
-        }
-
-        sr.sortingLayerName = "Foreground";
-    }
-
-
-
-    private void AdjustFoodSortingOrder(Transform targetPoint)
-    {
-        SpriteRenderer sr = food.GetComponent<SpriteRenderer>();
-        SpriteRenderer playerSr = GetComponent<SpriteRenderer>();
-        if (sr == null || playerSr == null) return;
-        if (targetPoint == dishPositionDown)
-        {
-            sr.sortingOrder = playerSr.sortingOrder + 1;
-        }
-        else
-        {
-            sr.sortingOrder = playerSr.sortingOrder;
         }
     }
 
@@ -313,31 +281,27 @@ public class player : MonoBehaviour
         }
 
         Transform chosenPoint = client.seatSide == ClientBehavior.SeatSide.Left ? leftPoint : rightPoint;
+        if (chosenPoint == null)
+        {
+            Debug.LogWarning($"No se encontró el dishPoint correspondiente para {client.name}");
+            return;
+        }
 
         GameObject servedDish = Instantiate(food, chosenPoint.position, Quaternion.identity, chosenPoint);
+        SpriteRenderer dishSr = food.GetComponent<SpriteRenderer>();
+        dishSr.sortingLayerName = "Foreground";
+        dishSr.sortingOrder = 1;
 
         Dish dishComp = servedDish.GetComponent<Dish>();
         if (dishComp == null)
             dishComp = servedDish.AddComponent<Dish>();
+
         dishComp.AssignOrder(client);
+        dishComp.exitPoint = GameObject.Find("ExitPoint").transform;
+        dishComp.StartEatingRoutine();
 
-        SpriteRenderer sr = servedDish.GetComponent<SpriteRenderer>();
-        SpriteRenderer playerSr = GetComponent<SpriteRenderer>();
-
-        if (sr != null)
-        {
-            sr.sortingLayerName = "Foreground";
-
-            if (client.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("sitLeft"))
-                sr.sortingOrder = playerSr.sortingOrder + 1;
-            else if (client.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("sitRight"))
-                sr.sortingOrder = playerSr.sortingOrder + 1;
-            else
-                sr.sortingOrder = playerSr.sortingOrder + 1;
-        }
-
+        Debug.Log($"🍽️ Plato '{foodData.name}' colocado correctamente en la mesa de {client.name}");
     }
-
 
 
     void FixedUpdate()

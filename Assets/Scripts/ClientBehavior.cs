@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 
 [RequireComponent(typeof(Collider2D))]
 public class ClientBehavior : MonoBehaviour
@@ -29,29 +30,14 @@ public class ClientBehavior : MonoBehaviour
     private bool isDragging = false;
     private bool isWaiting = false;
     private Coroutine moveCoroutine = null;
-
     private ClientSpawner spawner = null;
 
     private Collider2D col;
     private Vector3 startDragPosition;
 
-
     private bool hasOrdered = false;
     public bool orderTaken = false;
     public bool HasPendingOrder => CurrentOrder != null && !orderTaken;
-
-    private void Start()
-    {
-        col = GetComponent<Collider2D>();
-    }
-
-    public void Initialize(Vector3 waitPosition, ClientSpawner spawnerRef = null)
-    {
-        spawner = spawnerRef;
-        targetPosition = waitPosition;
-        waitPositionClient = waitPosition;
-        StartMoveToTarget();
-    }
 
     private void Awake()
     {
@@ -68,26 +54,70 @@ public class ClientBehavior : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        col = GetComponent<Collider2D>();
+    }
+
+    public void Initialize(Vector3 waitPosition, ClientSpawner spawnerRef = null)
+    {
+        spawner = spawnerRef;
+        targetPosition = waitPosition;
+        waitPositionClient = waitPosition;
+
+        var aiPath = GetComponent<AIPath>();
+        var destSetter = GetComponent<AIDestinationSetter>();
+
+        if (aiPath != null)
+        {
+            aiPath.canMove = false;
+            aiPath.enabled = false;
+        }
+
+        if (destSetter != null)
+            destSetter.enabled = false;
+        StartMoveToTarget();
+    }
+
     private void StartMoveToTarget()
     {
         if (moveCoroutine != null) StopCoroutine(moveCoroutine);
+
+            anim.SetBool("isWalking", true);
+            anim.SetFloat("Horizontal", 0f);
+            anim.SetFloat("Vertical", 1f);
+
         moveCoroutine = StartCoroutine(MoveToTargetRoutine());
     }
 
+    
     private IEnumerator MoveToTargetRoutine()
     {
-        anim?.SetBool("isWalking", true);
+        Vector3 lastPosition = transform.position;
+        yield return null;
 
         while (Vector3.Distance(transform.position, targetPosition) > 0.05f)
         {
             if (isDragging) yield break;
+
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            Vector3 dir = (transform.position - lastPosition).normalized;
+            lastPosition = transform.position;
+
+            if (anim != null)
+            {
+                anim.SetFloat("Horizontal", dir.x);
+                anim.SetFloat("Vertical", dir.y);
+            }
+
             yield return null;
         }
+        yield return new WaitForSeconds(0.05f);
 
         anim?.SetBool("isWalking", false);
         isWaiting = true;
     }
+
 
     private void OnMouseDown()
     {
@@ -95,7 +125,6 @@ public class ClientBehavior : MonoBehaviour
         startDragPosition = transform.position;
         transform.position = GetMouseWorldPos();
         isDragging = true;
-        anim?.SetBool("isWalking", false);
     }
 
     private void OnMouseDrag()
@@ -128,12 +157,12 @@ public class ClientBehavior : MonoBehaviour
     {
         assignedTable = table;
         anim?.SetTrigger(direction);
-        StartCoroutine(giveOrder());
+        StartCoroutine(GiveOrder());
     }
 
-    private IEnumerator giveOrder()
+    private IEnumerator GiveOrder()
     {
-        float waitTime = Random.Range(5f, 10f);
+        float waitTime = Random.Range(1f, 3f);
         yield return new WaitForSeconds(waitTime);
 
         if (possibleFoods.Count > 0)
@@ -151,29 +180,58 @@ public class ClientBehavior : MonoBehaviour
         }
     }
 
-    public bool IsReadyToTakeOrder()
+    public bool IsReadyToTakeOrder() => hasOrdered && CurrentOrder != null && !orderTaken;
+    public bool HasOrder() => CurrentOrder != null;
+    public bool IsOrderTaken() => orderTaken;
+    public Food GetCurrentOrder() => CurrentOrder;
+    public void MarkOrderTaken() => orderTaken = true;
+
+
+    public void LeaveRestaurant(Vector3 exitPosition)
     {
-        return hasOrdered && CurrentOrder != null && !orderTaken;
+        var aiPath = GetComponent<AIPath>();
+        var destSetter = GetComponent<AIDestinationSetter>();
+
+        if (aiPath == null || destSetter == null)
+        {
+            Debug.LogWarning($"{name} no tiene los componentes necesarios para moverse con A* Pathfinding.");
+            return;
+        }
+
+        if (orderBalloon != null)
+            orderBalloon.SetActive(false);
+        CurrentOrder = null;
+        hasOrdered = false;
+        orderTaken = false;
+
+        aiPath.enabled = true;
+        destSetter.enabled = true;
+        aiPath.canMove = true;
+
+        GameObject exitTarget = new GameObject("ExitTarget");
+        exitTarget.transform.position = exitPosition;
+
+        destSetter.target = exitTarget.transform;
+
+        anim?.SetBool("isWalking", true);
+
+        StartCoroutine(CheckIfArrived(exitTarget.transform));
     }
 
-    public bool HasOrder()
-    {
-        return CurrentOrder != null;
-    }
 
-    public bool IsOrderTaken()
+    private IEnumerator CheckIfArrived(Transform target)
     {
-        return orderTaken;
-    }
+        var aiPath = GetComponent<AIPath>();
 
-    public Food GetCurrentOrder()
-    {
-        return CurrentOrder;
-    }
+        while (Vector3.Distance(transform.position, target.position) > 0.5f)
+        {
+            yield return null;
+        }
 
-    public void MarkOrderTaken()
-    {
-        orderTaken = true;
+        anim?.SetBool("isWalking", false);
+
+        Destroy(target.gameObject);
+        Destroy(gameObject);
     }
 
     private Vector3 GetMouseWorldPos()
@@ -186,5 +244,33 @@ public class ClientBehavior : MonoBehaviour
     public void Update()
     {
         anim?.SetBool("isDragging", isDragging);
+
+        var aiPath = GetComponent<AIPath>();
+        if (aiPath != null && aiPath.enabled && anim != null)
+        {
+            Vector2 velocity = aiPath.desiredVelocity;
+            bool isMoving = velocity.magnitude > 0.05f;
+
+            AnimatorStateInfo currentState = anim.GetCurrentAnimatorStateInfo(0);
+
+            if (isMoving)
+            {
+                Vector2 dir = velocity.normalized;
+                anim.SetFloat("Horizontal", dir.x);
+                anim.SetFloat("Vertical", dir.y);
+
+                if (!currentState.IsName("Walking Tree") && !anim.GetBool("isWalking"))
+                {
+                    anim.SetBool("isWalking", true);
+                }
+            }
+            else
+            {
+                if (anim.GetBool("isWalking"))
+                {
+                    anim.SetBool("isWalking", false);
+                }
+            }
+        }
     }
 }
