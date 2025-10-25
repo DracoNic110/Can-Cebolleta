@@ -835,10 +835,10 @@ TextureImporter:
       name: 12_Kitchen_32x32_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1314
-        width: 512
-        height: 114
+        x: 2
+        y: 1344
+        width: 61
+        height: 83
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1123,8 +1123,8 @@ TextureImporter:
         serializedVersion: 2
         x: 64
         y: 1226
-        width: 318
-        height: 42
+        width: 94
+        height: 23
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5759,6 +5759,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: 12_Kitchen_32x32_226
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 1314
+        width: 48
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e0c700561c1c3f4588047849d5e2b5b
+      internalID: -436403677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -5917,6 +5939,7 @@ TextureImporter:
       12_Kitchen_32x32_223: 2039825763693544944
       12_Kitchen_32x32_224: -5089899754616724573
       12_Kitchen_32x32_225: -8887790750134936684
+      12_Kitchen_32x32_226: -436403677
       12_Kitchen_32x32_23: -3968392957172828033
       12_Kitchen_32x32_24: 1713028482983168369
       12_Kitchen_32x32_25: 765271361155291572

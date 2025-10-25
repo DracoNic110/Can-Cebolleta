@@ -230,3 +230,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::rightChairDropArea
   sitOffset: {x: 1.8, y: -0.4, z: 0}
+  parentTable: {fileID: 0}
