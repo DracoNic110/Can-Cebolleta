@@ -39,9 +39,12 @@ public class ClientBehavior : MonoBehaviour
     public bool orderTaken = false;
     public bool HasPendingOrder => CurrentOrder != null && !orderTaken;
 
+    private ClientSatisfaction satisfaction;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        satisfaction = GetComponent<ClientSatisfaction>();
 
         if (orderBalloon != null)
         {
@@ -76,6 +79,9 @@ public class ClientBehavior : MonoBehaviour
 
         if (destSetter != null)
             destSetter.enabled = false;
+
+        satisfaction?.OnStateChange("WaitingPoint");
+
         StartMoveToTarget();
     }
 
@@ -83,14 +89,14 @@ public class ClientBehavior : MonoBehaviour
     {
         if (moveCoroutine != null) StopCoroutine(moveCoroutine);
 
-            anim.SetBool("isWalking", true);
-            anim.SetFloat("Horizontal", 0f);
-            anim.SetFloat("Vertical", 1f);
+        anim.SetBool("isWalking", true);
+        anim.SetFloat("Horizontal", 0f);
+        anim.SetFloat("Vertical", 1f);
 
         moveCoroutine = StartCoroutine(MoveToTargetRoutine());
     }
 
-    
+
     private IEnumerator MoveToTargetRoutine()
     {
         Vector3 lastPosition = transform.position;
@@ -112,6 +118,7 @@ public class ClientBehavior : MonoBehaviour
 
             yield return null;
         }
+
         yield return new WaitForSeconds(0.05f);
 
         anim?.SetBool("isWalking", false);
@@ -156,7 +163,11 @@ public class ClientBehavior : MonoBehaviour
     public void SitDown(string direction, Table table)
     {
         assignedTable = table;
+
+        seatSide = direction.ToLower() == "right" ? SeatSide.Right : SeatSide.Left;
+
         anim?.SetTrigger(direction);
+        GetComponent<ClientSatisfaction>()?.OnStateChange("WaitingOrder");
         StartCoroutine(GiveOrder());
     }
 
@@ -184,7 +195,16 @@ public class ClientBehavior : MonoBehaviour
     public bool HasOrder() => CurrentOrder != null;
     public bool IsOrderTaken() => orderTaken;
     public Food GetCurrentOrder() => CurrentOrder;
-    public void MarkOrderTaken() => orderTaken = true;
+    public void MarkOrderTaken()
+    {
+        orderTaken = true;
+        satisfaction?.OnStateChange("WaitingFood");
+    }
+
+    public void OnDishPlaced()
+    {
+        satisfaction?.OnStartEating();
+    }
 
 
     public void LeaveRestaurant(Vector3 exitPosition)

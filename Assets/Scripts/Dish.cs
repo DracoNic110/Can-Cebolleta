@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Dish : MonoBehaviour
 {
@@ -24,13 +26,12 @@ public class Dish : MonoBehaviour
         StartCoroutine(EatingCoroutine());
     }
 
-    private System.Collections.IEnumerator EatingCoroutine()
+    private IEnumerator EatingCoroutine()
     {
         float eatTime = Random.Range(10f, 15f);
-        Debug.Log($"{clientOwner.name} está comiendo {FoodData.name} durante {eatTime:F1}s...");
         yield return new WaitForSeconds(eatTime);
 
-        Debug.Log($"{clientOwner.name} ha terminado de comer y se levanta.");
+        clientOwner.GetComponent<ClientSatisfaction>()?.OnFinishedEating();
 
         if (exitPoint == null)
         {

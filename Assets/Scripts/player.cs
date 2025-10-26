@@ -298,6 +298,7 @@ public class player : MonoBehaviour
 
         dishComp.AssignOrder(client);
         dishComp.exitPoint = GameObject.Find("ExitPoint").transform;
+        client.GetComponent<ClientSatisfaction>()?.OnStartEating();
         dishComp.StartEatingRoutine();
 
         Debug.Log($"🍽️ Plato '{foodData.name}' colocado correctamente en la mesa de {client.name}");
