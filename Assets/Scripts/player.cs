@@ -12,9 +12,10 @@ public class player : MonoBehaviour
 
     [Header("Interacción con clientes")]
     [SerializeField] KeyCode takeOrderKey = KeyCode.E;
-    [SerializeField] float interactionRange = 1.5f;
+    [SerializeField] float interactionRange = 1f;
     [SerializeField] LayerMask clientLayer;
     [SerializeField] LayerMask foodLayer;
+    [SerializeField] LayerMask trashLayer;
 
     [Header("Puntos de las manos del chef")]
     [SerializeField] Transform dishPositionUp;
@@ -73,11 +74,13 @@ public class player : MonoBehaviour
             if (isHolding)
             {
                 TryDeliverFood();
+                TryDiscardDish();
             }
             else
             {
                 TryTakeOrder();
                 TryTakeFood();
+                TryCollectMoney();
             }
         }
     }
@@ -261,6 +264,26 @@ public class player : MonoBehaviour
         }
     }
 
+    private void TryDiscardDish()
+    {
+        if (!isHolding || food == null)
+            return;
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRange, trashLayer);
+
+        foreach (var hit in hits)
+        {
+            if (hit.CompareTag("Trash"))
+            {
+                Destroy(food);
+                food = null;
+                isHolding = false;
+                anim.SetBool("isHolding", false);
+                return;
+            }
+        }
+    }
+
 
     private void PlaceDishOnTable(ClientBehavior client, Food foodData)
     {
@@ -303,6 +326,74 @@ public class player : MonoBehaviour
 
         Debug.Log($"🍽️ Plato '{foodData.name}' colocado correctamente en la mesa de {client.name}");
     }
+
+
+    private void TryCollectMoney()
+    {
+        float radius = interactionRange;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRange);
+
+        bool foundTable = false;
+        bool collectedMoney = false;
+
+        foreach (var hit in hits)
+        {
+            if (!hit.CompareTag("Table"))
+                continue;
+
+            foundTable = true;
+            Transform table = hit.transform;
+
+            Transform leftPoint = table.Find("moneyPointLeft");
+            Transform rightPoint = table.Find("moneyPointRight");
+
+            int totalCollected = 0;
+
+            if (leftPoint != null)
+            {
+                foreach (Transform child in leftPoint)
+                {
+                    MoneyDrop m = child.GetComponent<MoneyDrop>();
+                    if (m != null)
+                    {
+                        totalCollected += m.amount;
+                        Destroy(child.gameObject);
+                    }
+                }
+            }
+
+            if (rightPoint != null)
+            {
+                foreach (Transform child in rightPoint)
+                {
+                    MoneyDrop m = child.GetComponent<MoneyDrop>();
+                    if (m != null)
+                    {
+                        totalCollected += m.amount;
+                        Destroy(child.gameObject);
+                    }
+                }
+            }
+
+            if (totalCollected > 0)
+            {
+                collectedMoney = true;
+                Debug.Log($"💰 El chef recogió {totalCollected}$ de la mesa '{table.name}'.");
+
+                GameManager.Instance.AddMoney(totalCollected);
+            }
+        }
+
+        if (!foundTable)
+        {
+            Debug.Log("⚠ No hay ninguna mesa dentro del rango de interacción.");
+        }
+        else if (!collectedMoney)
+        {
+            Debug.Log("💨 No hay dinero en los moneyPoints de la mesa.");
+        }
+    }
+
 
 
     void FixedUpdate()

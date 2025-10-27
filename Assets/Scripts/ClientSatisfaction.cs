@@ -129,6 +129,13 @@ public class ClientSatisfaction : MonoBehaviour
         if (coinPilePrefab != null)
         {
             GameObject coins = Instantiate(coinPilePrefab, moneyPoint.position, Quaternion.identity);
+            coins.transform.SetParent(moneyPoint);
+
+            MoneyDrop moneyDrop = coins.GetComponent<MoneyDrop>();
+            if (moneyDrop == null)
+                moneyDrop = coins.AddComponent<MoneyDrop>();
+
+            moneyDrop.amount = Mathf.RoundToInt(basePrice * percent);
         }
         else
         {
@@ -137,10 +144,17 @@ public class ClientSatisfaction : MonoBehaviour
 
         if (spawnBills && dollarsPrefab != null)
         {
-            GameObject bills = Instantiate(dollarsPrefab, moneyPoint.position, dollarsPrefab.transform.rotation);
-        }
+            GameObject bills = Instantiate(dollarsPrefab, moneyPoint.position + Vector3.up * 0.1f, dollarsPrefab.transform.rotation);
+            bills.transform.SetParent(moneyPoint);
 
-        hasPaid = true;
+            MoneyDrop moneyDrop = bills.GetComponent<MoneyDrop>();
+            if (moneyDrop == null)
+                moneyDrop = bills.AddComponent<MoneyDrop>();
+
+            moneyDrop.amount = Mathf.RoundToInt(basePrice * percent * 2f);
+
+            hasPaid = true;
+        }
     }
 
     private float GetPercentFromAverage(float avg)

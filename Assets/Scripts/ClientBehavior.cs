@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
@@ -19,6 +19,8 @@ public class ClientBehavior : MonoBehaviour
     [Header("Pedido")]
     [SerializeField] private GameObject orderBalloon;
     [SerializeField] private List<Food> possibleFoods;
+    [SerializeField] private float thinkingOrderIntervalStart;
+    [SerializeField] private float thinkingOrderIntervalEnd;
     private SpriteRenderer balloonRenderer;
     private SpriteRenderer foodRenderer;
     public Food CurrentOrder;
@@ -160,6 +162,16 @@ public class ClientBehavior : MonoBehaviour
         }
     }
 
+    public void ReturnToWaitingPoint()
+    {
+        Debug.Log($"⏳ {name} regresa a su punto de espera (mesa ocupada con dinero).");
+        transform.position = waitPositionClient;
+        isWaiting = true;
+        isDragging = false;
+        anim?.SetBool("isWalking", false);
+    }
+
+
     public void SitDown(string direction, Table table)
     {
         assignedTable = table;
@@ -173,7 +185,7 @@ public class ClientBehavior : MonoBehaviour
 
     private IEnumerator GiveOrder()
     {
-        float waitTime = Random.Range(1f, 3f);
+        float waitTime = Random.Range(thinkingOrderIntervalStart, thinkingOrderIntervalEnd);
         yield return new WaitForSeconds(waitTime);
 
         if (possibleFoods.Count > 0)
