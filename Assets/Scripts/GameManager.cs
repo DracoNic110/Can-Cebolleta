@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public int totalMoney = 0;
     public int quotaToReach = 150;
 
+    [Header("Prefabs FX")]
+    public GameObject floatingTextPrefab;
+
     private void Start()
     {
         UpdateUI();

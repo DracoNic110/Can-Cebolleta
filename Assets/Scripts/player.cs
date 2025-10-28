@@ -237,6 +237,16 @@ public class player : MonoBehaviour
             ClientBehavior client = hit.GetComponent<ClientBehavior>();
             if (client == null) continue;
 
+            if (client.assignedTableTransform == null)
+            {
+                Debug.LogWarning($"El cliente {client.name} no tiene mesa al intentar entregar. Se cancelará entrega.");
+                Destroy(food);
+                food = null;
+                isHolding = false;
+                anim.SetBool("isHolding", false);
+                return;
+            }
+
             Dish holdDishComp = food.GetComponent<Dish>();
             if (holdDishComp == null || holdDishComp.FoodData == null)
             {
@@ -244,25 +254,55 @@ public class player : MonoBehaviour
                 return;
             }
 
-            if (client.HasOrder() && holdDishComp.FoodData == client.GetCurrentOrder())
+            if (client.HasOrder() && AreFoodsEquivalent(holdDishComp.FoodData, client.GetCurrentOrder()))
             {
-                PlaceDishOnTable(client, holdDishComp.FoodData);
-                client.MarkOrderTaken();
+                bool placed = PlaceDishOnTable(client, holdDishComp.FoodData);
+                if (placed)
+                {
+                    client.MarkOrderTaken();
 
-                Destroy(food);
-                food = null;
-                isHolding = false;
-                anim.SetBool("isHolding", false);
+                    Destroy(food);
+                    food = null;
+                    isHolding = false;
+                    anim.SetBool("isHolding", false);
 
-                Debug.Log($"✅ Plato '{holdDishComp.FoodData.name}' entregado correctamente a {client.name}");
+                    Debug.Log($"✅ Plato '{holdDishComp.FoodData.name}' entregado correctamente a {client.name}");
+                }
+                else
+                {
+                    Debug.LogWarning($"No se pudo colocar el plato para {client.name} (posible salida). Plato destruido.");
+                    Destroy(food);
+                    food = null;
+                    isHolding = false;
+                    anim.SetBool("isHolding", false);
+                }
                 return;
             }
             else
             {
-                Debug.Log($"❌ El cliente {client.name} pidió {client.GetCurrentOrder().name}, pero tienes {holdDishComp.FoodData.name}");
+                Debug.Log($"❌ El cliente {client.name} pidió {(client.GetCurrentOrder() != null ? client.GetCurrentOrder().name : "nada")}, pero tienes {holdDishComp.FoodData.name}");
             }
         }
     }
+
+    private bool AreFoodsEquivalent(Food a, Food b)
+    {
+        if (a == null || b == null)
+            return false;
+
+        if (!string.IsNullOrEmpty(a.id) && !string.IsNullOrEmpty(b.id))
+            return a.id.Trim().ToLower() == b.id.Trim().ToLower();
+
+        if (!string.IsNullOrEmpty(a.name) && !string.IsNullOrEmpty(b.name))
+            return a.name.Trim().ToLower() == b.name.Trim().ToLower();
+
+        if (a.dishSprite != null && b.dishSprite != null && a.dishSprite == b.dishSprite)
+            return true;
+
+        return false;
+    }
+
+
 
     private void TryDiscardDish()
     {
@@ -285,13 +325,19 @@ public class player : MonoBehaviour
     }
 
 
-    private void PlaceDishOnTable(ClientBehavior client, Food foodData)
+    private bool PlaceDishOnTable(ClientBehavior client, Food foodData)
     {
+        if (client == null)
+        {
+            Debug.LogWarning("PlaceDishOnTable: client == null");
+            return false;
+        }
+
         Transform tableTransform = client.assignedTableTransform;
         if (tableTransform == null)
         {
-            Debug.LogWarning($"El cliente {client.name} no tiene mesa asignada.");
-            return;
+            Debug.LogWarning($"PlaceDishOnTable: El cliente {client.name} no tiene mesa asignada.");
+            return false;
         }
 
         Transform leftPoint = tableTransform.Find("dishPointLeft");
@@ -300,33 +346,60 @@ public class player : MonoBehaviour
         if (leftPoint == null && rightPoint == null)
         {
             Debug.LogWarning($"La mesa de {client.name} no tiene dishPoints asignados.");
-            return;
+            return false;
         }
 
-        Transform chosenPoint = client.seatSide == ClientBehavior.SeatSide.Left ? leftPoint : rightPoint;
+        Transform chosenPoint = (client.seatSide == ClientBehavior.SeatSide.Left) ? leftPoint : rightPoint;
+
         if (chosenPoint == null)
         {
-            Debug.LogWarning($"No se encontró el dishPoint correspondiente para {client.name}");
-            return;
+            chosenPoint = leftPoint ?? rightPoint ?? tableTransform;
+            Debug.LogWarning($"No se encontró el dishPoint exacto para {client.name}, usando fallback '{chosenPoint.name}'.");
         }
 
-        GameObject servedDish = Instantiate(food, chosenPoint.position, Quaternion.identity, chosenPoint);
-        SpriteRenderer dishSr = food.GetComponent<SpriteRenderer>();
-        dishSr.sortingLayerName = "Foreground";
-        dishSr.sortingOrder = 1;
+        GameObject servedDish = null;
+        try
+        {
+            servedDish = Instantiate(food, chosenPoint.position, Quaternion.identity, chosenPoint);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error instanciando el plato: {e.Message}");
+            return false;
+        }
+
+        if (servedDish == null)
+        {
+            Debug.LogWarning("PlaceDishOnTable: failed to Instantiate servedDish.");
+            return false;
+        }
+
+        SpriteRenderer servedSr = servedDish.GetComponent<SpriteRenderer>();
+        if (servedSr != null)
+        {
+            servedSr.sortingLayerName = "Foreground";
+            servedSr.sortingOrder = 1;
+        }
 
         Dish dishComp = servedDish.GetComponent<Dish>();
         if (dishComp == null)
             dishComp = servedDish.AddComponent<Dish>();
 
         dishComp.AssignOrder(client);
-        dishComp.exitPoint = GameObject.Find("ExitPoint").transform;
+
+        GameObject exitGO = GameObject.Find("ExitPoint");
+        if (exitGO != null)
+            dishComp.exitPoint = exitGO.transform;
+        else
+            dishComp.exitPoint = null;
+
         client.GetComponent<ClientSatisfaction>()?.OnStartEating();
         dishComp.StartEatingRoutine();
 
         Debug.Log($"🍽️ Plato '{foodData.name}' colocado correctamente en la mesa de {client.name}");
-    }
 
+        return true;
+    }
 
     private void TryCollectMoney()
     {
@@ -336,8 +409,9 @@ public class player : MonoBehaviour
         bool foundTable = false;
         bool collectedMoney = false;
 
-        foreach (var hit in hits)
+        for (int hi = 0; hi < hits.Length; hi++)
         {
+            Collider2D hit = hits[hi];
             if (!hit.CompareTag("Table"))
                 continue;
 
@@ -351,47 +425,122 @@ public class player : MonoBehaviour
 
             if (leftPoint != null)
             {
-                foreach (Transform child in leftPoint)
+                int childCount = leftPoint.childCount;
+                Transform[] childs = new Transform[childCount];
+                for (int i = 0; i < childCount; i++)
+                    childs[i] = leftPoint.GetChild(i);
+
+                for (int i = 0; i < childs.Length; i++)
                 {
+                    Transform child = childs[i];
+                    if (child == null) continue;
+
                     MoneyDrop m = child.GetComponent<MoneyDrop>();
-                    if (m != null)
+                    if (m == null) continue;
+
+
+                    Vector3 moneyWorldPos = child.position;
+
+                    totalCollected += m.amount;
+                    collectedMoney = true;
+
+                    Destroy(child.gameObject);
+
+                    Vector3 spawnPos = new Vector3(moneyWorldPos.x, moneyWorldPos.y + 0.01f, moneyWorldPos.z);
+
+                    if (SoundsManager.Instance != null)
+                        SoundsManager.Instance.PlaySound("CashRegister");
+
+                    if (GameManager.Instance != null && GameManager.Instance.floatingTextPrefab != null)
                     {
-                        totalCollected += m.amount;
-                        Destroy(child.gameObject);
+                        GameObject floatTxtGO = Instantiate(GameManager.Instance.floatingTextPrefab, spawnPos, Quaternion.identity);
+                        floatTxtGO.transform.SetParent(null);
+                        floatTxtGO.transform.position = spawnPos;
+                        floatTxtGO.transform.rotation = Quaternion.identity;
+
+                        FloatingText ft = floatTxtGO.GetComponent<FloatingText>();
+                        if (ft != null)
+                        {
+                            ft.Initialize($"+ ${m.amount}", Color.green, spawnPos, 0.7f, 1.0f);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("FloatingText component no encontrado en prefab instanciado.");
+                        }
+
+                        Debug.Log($"[MoneyCollect] MoneyDrop pos: {moneyWorldPos} -> FloatingText pos after instantiate: {floatTxtGO.transform.position}");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("GameManager.Instance.floatingTextPrefab no asignado.");
                     }
                 }
             }
 
             if (rightPoint != null)
             {
-                foreach (Transform child in rightPoint)
+                int childCount2 = rightPoint.childCount;
+                Transform[] childs2 = new Transform[childCount2];
+                for (int i = 0; i < childCount2; i++)
+                    childs2[i] = rightPoint.GetChild(i);
+
+                for (int i = 0; i < childs2.Length; i++)
                 {
+                    Transform child = childs2[i];
+                    if (child == null) continue;
+
                     MoneyDrop m = child.GetComponent<MoneyDrop>();
-                    if (m != null)
+                    if (m == null) continue;
+
+                    Vector3 moneyWorldPos = child.position;
+
+                    totalCollected += m.amount;
+                    collectedMoney = true;
+
+                    Destroy(child.gameObject);
+
+                    Vector3 spawnPos = new Vector3(moneyWorldPos.x, moneyWorldPos.y + 0.01f, moneyWorldPos.z);
+
+                    if (SoundsManager.Instance != null)
+                        SoundsManager.Instance.PlaySound("CashRegister");
+
+                    if (GameManager.Instance != null && GameManager.Instance.floatingTextPrefab != null)
                     {
-                        totalCollected += m.amount;
-                        Destroy(child.gameObject);
+                        GameObject floatTxtGO = Instantiate(GameManager.Instance.floatingTextPrefab, spawnPos, Quaternion.identity);
+                        floatTxtGO.transform.SetParent(null);
+                        floatTxtGO.transform.position = spawnPos;
+                        floatTxtGO.transform.rotation = Quaternion.identity;
+
+                        FloatingText ft = floatTxtGO.GetComponent<FloatingText>();
+                        if (ft != null)
+                        {
+                            ft.Initialize($"+ ${m.amount}", Color.green, spawnPos, 0.7f, 1.0f);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("FloatingText component no encontrado en prefab instanciado.");
+                        }
+
+                        Debug.Log($"[MoneyCollect] MoneyDrop pos: {moneyWorldPos} -> FloatingText pos after instantiate: {floatTxtGO.transform.position}");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("GameManager.Instance.floatingTextPrefab no asignado.");
                     }
                 }
             }
 
-            if (totalCollected > 0)
+            if (collectedMoney && totalCollected > 0)
             {
-                collectedMoney = true;
-                Debug.Log($"💰 El chef recogió {totalCollected}$ de la mesa '{table.name}'.");
-
                 GameManager.Instance.AddMoney(totalCollected);
+                Debug.Log($"💰 El chef recogió {totalCollected}$ de la mesa '{table.name}'.");
             }
         }
 
         if (!foundTable)
-        {
             Debug.Log("⚠ No hay ninguna mesa dentro del rango de interacción.");
-        }
         else if (!collectedMoney)
-        {
             Debug.Log("💨 No hay dinero en los moneyPoints de la mesa.");
-        }
     }
 
 

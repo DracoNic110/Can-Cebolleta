@@ -53,6 +53,9 @@ public class ClientSatisfaction : MonoBehaviour
         {
             currentTimer += Time.deltaTime;
 
+            if (currentTimer >= 22f && !client.isAngry)
+                client.StartAngryEffect();
+
             if (currentTimer >= maxWaitTime)
             {
                 clientLost = true;
@@ -64,6 +67,8 @@ public class ClientSatisfaction : MonoBehaviour
 
     public void OnStateChange(string newState)
     {
+        client?.StopAngryEffect();
+
         switch (currentState)
         {
             case ClientState.WaitingPoint:
@@ -74,6 +79,12 @@ public class ClientSatisfaction : MonoBehaviour
                 break;
             case ClientState.WaitingFood:
                 waitingFoodTime = currentTimer;
+                break;
+            case ClientState.Eating:
+                currentTimer = 0f;
+                break;
+            case ClientState.Leaving:
+                currentTimer = 0f;
                 break;
         }
 
@@ -88,6 +99,7 @@ public class ClientSatisfaction : MonoBehaviour
 
     public void OnStartEating()
     {
+        client?.StopAngryEffect();
         OnStateChange("Eating");
     }
 
@@ -126,7 +138,18 @@ public class ClientSatisfaction : MonoBehaviour
 
         bool spawnBills = percent >= 0.75f;
 
-        if (coinPilePrefab != null)
+        if (spawnBills && dollarsPrefab != null)
+        {
+            GameObject bills = Instantiate(dollarsPrefab, moneyPoint.position, dollarsPrefab.transform.rotation);
+            bills.transform.SetParent(moneyPoint);
+
+            MoneyDrop moneyDrop = bills.GetComponent<MoneyDrop>();
+            if (moneyDrop == null)
+                moneyDrop = bills.AddComponent<MoneyDrop>();
+
+            moneyDrop.amount = Mathf.RoundToInt(basePrice * percent);
+        }
+        else if (coinPilePrefab != null)
         {
             GameObject coins = Instantiate(coinPilePrefab, moneyPoint.position, Quaternion.identity);
             coins.transform.SetParent(moneyPoint);
@@ -137,25 +160,21 @@ public class ClientSatisfaction : MonoBehaviour
 
             moneyDrop.amount = Mathf.RoundToInt(basePrice * percent);
         }
+
+        hasPaid = true;
+        clientLost = false;
+        currentState = ClientState.Leaving;
+        client?.StopAngryEffect();
+
+        GameObject exit = GameObject.Find("ClientPoints/ExitPoint");
+        if (exit != null)
+            client.LeaveRestaurant(exit.transform.position);
         else
-        {
-            Debug.LogWarning($"coinPilePrefab no asignado en {name}.");
-        }
+            client.LeaveRestaurant(client.transform.position + Vector3.right * 5f);
 
-        if (spawnBills && dollarsPrefab != null)
-        {
-            GameObject bills = Instantiate(dollarsPrefab, moneyPoint.position + Vector3.up * 0.1f, dollarsPrefab.transform.rotation);
-            bills.transform.SetParent(moneyPoint);
-
-            MoneyDrop moneyDrop = bills.GetComponent<MoneyDrop>();
-            if (moneyDrop == null)
-                moneyDrop = bills.AddComponent<MoneyDrop>();
-
-            moneyDrop.amount = Mathf.RoundToInt(basePrice * percent * 2f);
-
-            hasPaid = true;
-        }
+        Debug.Log($"😀 {name} terminó de comer y se va feliz del restaurante.");
     }
+
 
     private float GetPercentFromAverage(float avg)
     {

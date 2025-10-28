@@ -9,6 +9,7 @@ public class ClientBehavior : MonoBehaviour
     [Header("Movimiento")]
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private LayerMask tableLayerMask;
+    private Coroutine queueMoveCoroutine = null;
 
     [Header("Sentarse en mesas")]
     public Table assignedTable;
@@ -31,6 +32,7 @@ public class ClientBehavior : MonoBehaviour
 
     private bool isDragging = false;
     private bool isWaiting = false;
+    public bool isAngry = false;
     private Coroutine moveCoroutine = null;
     private ClientSpawner spawner = null;
 
@@ -42,11 +44,20 @@ public class ClientBehavior : MonoBehaviour
     public bool HasPendingOrder => CurrentOrder != null && !orderTaken;
 
     private ClientSatisfaction satisfaction;
+    private Color originalColor;
+    private SpriteRenderer sr;
+    public Color angryColor = Color.red;
+    private Coroutine angryCoroutine = null;
+
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         satisfaction = GetComponent<ClientSatisfaction>();
+        sr = GetComponent<SpriteRenderer>();
+
+        if (sr != null)
+            originalColor = sr.color;
 
         if (orderBalloon != null)
         {
@@ -62,6 +73,15 @@ public class ClientBehavior : MonoBehaviour
     private void Start()
     {
         col = GetComponent<Collider2D>();
+        sr = GetComponent<SpriteRenderer>();
+
+        if (sr != null)
+        {
+            sr.material = new Material(sr.material);
+
+            sr.color = Color.white;
+            originalColor = sr.color;
+        }
     }
 
     public void Initialize(Vector3 waitPosition, ClientSpawner spawnerRef = null)
@@ -181,7 +201,13 @@ public class ClientBehavior : MonoBehaviour
         anim?.SetTrigger(direction);
         GetComponent<ClientSatisfaction>()?.OnStateChange("WaitingOrder");
         StartCoroutine(GiveOrder());
+
+        spawner?.NotifyClientSeated(gameObject);
+        isWaiting = false;
     }
+
+
+
 
     private IEnumerator GiveOrder()
     {
@@ -199,7 +225,7 @@ public class ClientBehavior : MonoBehaviour
             }
 
             hasOrdered = true;
-            Debug.Log($"{name} ha pedido: {CurrentOrder.name}");
+            Debug.Log($"{this.name} ha pedido: {CurrentOrder.name}");
         }
     }
 
@@ -216,6 +242,39 @@ public class ClientBehavior : MonoBehaviour
     public void OnDishPlaced()
     {
         satisfaction?.OnStartEating();
+    }
+
+    public IEnumerator changeAngry()
+    {
+        float duration = 1.0f;
+
+        while (true)
+        {
+            float pingPongTime = Mathf.PingPong(Time.time, duration);
+            sr.color = Color.Lerp(originalColor, angryColor, pingPongTime / duration);
+            yield return null;
+        }
+    }
+
+    public void StartAngryEffect()
+    {
+        if (isAngry) return;
+        isAngry = true;
+        angryCoroutine = StartCoroutine(changeAngry());
+    }
+
+    public void StopAngryEffect()
+    {
+        if (angryCoroutine != null)
+        {
+            StopCoroutine(angryCoroutine);
+            angryCoroutine = null;
+        }
+
+        isAngry = false;
+
+        if (sr != null)
+            sr.color = originalColor;
     }
 
 
@@ -261,10 +320,15 @@ public class ClientBehavior : MonoBehaviour
         }
 
         anim?.SetBool("isWalking", false);
+        StopAngryEffect();
+
+        spawner?.NotifyClientLeft(gameObject);
 
         Destroy(target.gameObject);
         Destroy(gameObject);
     }
+
+
 
     private Vector3 GetMouseWorldPos()
     {
@@ -305,4 +369,41 @@ public class ClientBehavior : MonoBehaviour
             }
         }
     }
+
+    public void MoveTo(Vector3 newPosition)
+    {
+        if (isDragging) return;
+        if (queueMoveCoroutine != null)
+        {
+            StopCoroutine(queueMoveCoroutine);
+            queueMoveCoroutine = null;
+        }
+
+        waitPositionClient = newPosition;
+        targetPosition = newPosition;
+
+        queueMoveCoroutine = StartCoroutine(MoveToTargetSmooth(newPosition));
+    }
+
+
+    private IEnumerator MoveToTargetSmooth(Vector3 newPos)
+    {
+        if (isDragging) yield break;
+
+        anim?.SetBool("isWalking", true);
+        anim?.SetFloat("Horizontal", 0f);
+        anim?.SetFloat("Vertical", 1f);
+
+        while (Vector3.Distance(transform.position, newPos) > 0.05f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, newPos, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        transform.position = newPos;
+        waitPositionClient = newPos;
+        anim?.SetBool("isWalking", false);
+        queueMoveCoroutine = null;
+    }
+
 }

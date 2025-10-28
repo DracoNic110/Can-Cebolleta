@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class MoneyDrop : MonoBehaviour
 {
-    public int amount = 50;
+    [SerializeField] public int amount = 10;
 }

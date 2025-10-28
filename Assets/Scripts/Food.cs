@@ -4,6 +4,7 @@ using UnityEngine;
 public class Food
 {
     [Header("Identificación de la comida")]
+    public string id;
     public string name;
 
     [Header("Sprites")]
