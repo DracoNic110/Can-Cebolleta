@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 4544396711113094517}
   - component: {fileID: 2262237933883974143}
   - component: {fileID: 449475674223277265}
+  - component: {fileID: -6785025755963576096}
+  - component: {fileID: -3059131513103854773}
   m_Layer: 7
   m_Name: ClientExample
   m_TagString: Untagged
@@ -88,7 +90,7 @@ SpriteRenderer:
   m_SortingLayerID: 1899168063
   m_SortingLayer: -1
   m_SortingOrder: 1
-  m_Sprite: {fileID: -3557550811819843104, guid: 9971d126aa615624194a1755b155bcd0, type: 3}
+  m_Sprite: {fileID: 8793639957104055765, guid: 2679b9b087f04e14ab73d9670a654411, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -392,6 +394,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: AstarPathfindingProject::Pathfinding.AIDestinationSetter
   version: 1
   target: {fileID: 0}
+--- !u!114 &-6785025755963576096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4202846288647006821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
+  m_Library: []
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 4ea98f29bcc803149bf7fbe73f6c4d68, type: 3}
+--- !u!114 &-3059131513103854773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4202846288647006821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
+  m_CategoryHash: 0
+  m_labelHash: 0
+  m_SpriteKey: 0
+  m_SpriteHash: 143410994
 --- !u!1 &4483455296782691959
 GameObject:
   m_ObjectHideFlags: 0
