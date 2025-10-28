@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.U2D.Animation;
 
 public class ClientSpawner : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class ClientSpawner : MonoBehaviour
     [Header("Fila de Espera")]
     [SerializeField] private float spacing = 1.2f;
     [SerializeField] private Vector2 direction = new Vector2(0f, -1f);
+
+    [Header("random Sprite selector")]
+    [SerializeField] private List<SpriteLibraryAsset> skins;
 
     private int currentClients = 0;
     private List<GameObject> spawned = new List<GameObject>();
@@ -72,7 +76,9 @@ public class ClientSpawner : MonoBehaviour
     {
         if (clientPrefab == null || spawnPoint == null) return;
 
+
         GameObject client = Instantiate(clientPrefab, spawnPoint.position, Quaternion.identity);
+        client.GetComponent<SpriteLibrary>().spriteLibraryAsset = skins[Random.Range(0, skins.Count)];
         spawned.Add(client);
         currentClients++;
 
