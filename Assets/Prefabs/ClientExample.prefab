@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 4544396711113094517}
   - component: {fileID: 2262237933883974143}
   - component: {fileID: 449475674223277265}
+  - component: {fileID: 6717000709466628201}
+  - component: {fileID: 4258234185960813103}
   - component: {fileID: -6785025755963576096}
   - component: {fileID: -3059131513103854773}
   m_Layer: 7
@@ -394,6 +396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: AstarPathfindingProject::Pathfinding.AIDestinationSetter
   version: 1
   target: {fileID: 0}
+--- !u!114 &6717000709466628201
 --- !u!114 &-6785025755963576096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +410,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
   m_Library: []
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 3e35d3203c158ab48a4f5470b133affc, type: 3}
+--- !u!114 &4258234185960813103
   m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 4ea98f29bcc803149bf7fbe73f6c4d68, type: 3}
 --- !u!114 &-3059131513103854773
 MonoBehaviour:
@@ -423,6 +428,7 @@ MonoBehaviour:
   m_CategoryHash: 0
   m_labelHash: 0
   m_SpriteKey: 0
+  m_SpriteHash: 0
   m_SpriteHash: 143410994
 --- !u!1 &4483455296782691959
 GameObject:
