@@ -7,6 +7,7 @@ public class SoundsManager : MonoBehaviour
 
     [Header("Audios")]
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource musicSource;
     [SerializeField] private List<AudioClip> audioClips;
 
     private Dictionary<string, AudioClip> clipsDict;
@@ -30,6 +31,12 @@ public class SoundsManager : MonoBehaviour
 
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
+        if (musicSource == null)
+            musicSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.loop = false;
+        musicSource.loop = false;
+        musicSource.playOnAwake = false;
     }
 
     public void PlaySound(string name)
@@ -38,9 +45,36 @@ public class SoundsManager : MonoBehaviour
         {
             audioSource.PlayOneShot(clip);
         }
-        else
+    }
+
+    public void PlayMusic(string name)
+    {
+        if (clipsDict.TryGetValue(name, out AudioClip clip))
         {
-            Debug.LogWarning($"🔊 SoundsManager: no se encontró el clip '{name}'");
+            if (musicSource.clip == clip && musicSource.isPlaying) return;
+
+            musicSource.clip = clip;
+            musicSource.loop = true;
+            musicSource.volume = 0.8f;
+            musicSource.Play();
         }
+    }
+
+    public void ReduceVolume(string name)
+    {
+        if (musicSource.isPlaying && musicSource.clip != null && musicSource.clip.name == name)
+            musicSource.volume = 0.3f;
+    }
+
+    public void RestoreVolume(string name)
+    {
+        if (musicSource.isPlaying && musicSource.clip != null && musicSource.clip.name == name)
+            musicSource.volume = 1f;
+    }
+
+    public void StopMusic(string name)
+    {
+        if (musicSource.isPlaying && musicSource.clip != null && musicSource.clip.name == name)
+            musicSource.Stop();
     }
 }

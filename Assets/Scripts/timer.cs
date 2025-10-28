@@ -22,10 +22,19 @@ public class Timer : MonoBehaviour
         Time.timeScale = 0;
         gameOverScreen.SetActive(true);
         timerText.text = "Closed";
+
+        if (SoundsManager.Instance != null) {
+            SoundsManager.Instance.StopMusic("Le Grand Chase");
+            SoundsManager.Instance.PlayMusic("Long Stroll");
+        }
+            
+
     }
 
     void Start() {
         Time.timeScale = 1;
+        if (SoundsManager.Instance != null)
+            SoundsManager.Instance.PlayMusic("Le Grand Chase");
     }
 
     // Update is called once per frame
@@ -50,7 +59,5 @@ public class Timer : MonoBehaviour
         {
             timerText.color = Color.red;
         }
-
     }
-    
 }

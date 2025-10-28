@@ -11,33 +11,43 @@ public class PauseMenu : MonoBehaviour
 
     public void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Escape) && gamePaused == false) && timer.getGameOver() == false)
+        if ((Input.GetKeyDown(KeyCode.Escape) && !gamePaused) && !timer.getGameOver())
         {
             gamePaused = true;
             pauseMenu.SetActive(true);
             Time.timeScale = 0;
-            
 
+            if (SoundsManager.Instance != null)
+                SoundsManager.Instance.ReduceVolume("Le Grand Chase");
         }
-        else if ((Input.GetKeyDown(KeyCode.Escape) && gamePaused == true) && timer.getGameOver() == false) 
+        else if ((Input.GetKeyDown(KeyCode.Escape) && gamePaused) && !timer.getGameOver())
         {
             gamePaused = false;
             pauseMenu.SetActive(false);
             Time.timeScale = 1;
-            
-        }    
+            if (SoundsManager.Instance != null)
+                SoundsManager.Instance.RestoreVolume("Le Grand Chase");
+        }
     }
+
+
     public void Resume()
     {
         gamePaused = false;
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
+        if (SoundsManager.Instance != null)
+            SoundsManager.Instance.RestoreVolume("Le Grand Chase");
     }
     public void Home()
     {
         Time.timeScale = 1;
         SceneManager.LoadSceneAsync(0);
-        
+
+        if (SoundsManager.Instance != null) {
+            SoundsManager.Instance.StopMusic("Le Grand Chase");
+            SoundsManager.Instance.PlayMusic("Hackbeat");
+        }
     }
 
     public void ReStart() 
