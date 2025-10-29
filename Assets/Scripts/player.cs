@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// Script para controlar el jugador
 public class player : MonoBehaviour
 {
 
@@ -11,7 +12,7 @@ public class player : MonoBehaviour
     [SerializeField] float speed;
 
     [Header("Interacción con clientes")]
-    [SerializeField] KeyCode takeOrderKey = KeyCode.E;
+    [SerializeField] KeyCode interactionKey = KeyCode.E;
     [SerializeField] float interactionRange = 1f;
     [SerializeField] LayerMask clientLayer;
     [SerializeField] LayerMask foodLayer;
@@ -44,16 +45,18 @@ public class player : MonoBehaviour
         if (isHolding && food != null) UpdateHoldPosition();
     }
 
+    // Este es el método que utilizamos para mover el jugador
     private void Movement() {
-
-
+        // Mientras está recogiendo la comida no puede moverse
         if (isPickingUp) {
             anim.SetBool("isMoving", false);
             move = Vector3.zero;
             return;
         }
+        // Se obtiene los inputs del jugador
         move = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0f).normalized;
 
+        // Se actualiza la animaciones con el WalkingTree de las animaciones 2D
         anim.SetFloat("horizontal", move.x);
         anim.SetFloat("vertical", move.y);
 
@@ -67,17 +70,20 @@ public class player : MonoBehaviour
         }
     }
 
+    // Método para que el jugador interactúe con el entorno
     private void Interaction()
     {
-        if (Input.GetKeyDown(takeOrderKey))
+        if (Input.GetKeyDown(interactionKey))
         {
             if (isHolding)
             {
+                // Interacciones mientras sostiene comida
                 TryDeliverFood();
                 TryDiscardDish();
             }
             else
             {
+                // Interacciones mientras no la sostiene
                 TryTakeOrder();
                 TryTakeFood();
                 TryCollectMoney();
@@ -85,15 +91,16 @@ public class player : MonoBehaviour
         }
     }
 
-
+    // Método para tomar la orden al cliente
     private void TryTakeOrder() {
+
+        // Siempre y cuando no tenga un objeto o esté pillando uno
         if (isHolding || isPickingUp)
         {
-            Debug.Log("No puedes tomar pedidos mientras sostienes un plato.");
             return;
         }
-
-
+        
+        // Detecta si hay clientes cercanos con la capa clientLayer y el rango de interacción del jugador
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRange, clientLayer);
 
 
@@ -102,8 +109,6 @@ public class player : MonoBehaviour
             ClientBehavior client = hit.GetComponent<ClientBehavior>();
             if (client != null && client.IsReadyToTakeOrder())
             {
-                Debug.Log("Pedido tomado del cliente {client.name}");
-
                 client.MarkOrderTaken();
 
                 if (kitchenManager != null)
@@ -111,18 +116,19 @@ public class player : MonoBehaviour
                 return;
             }
         }
-
-        Debug.Log("No hay clientes cercanos con pedidos disponibles.");
     }
 
+    // Método para intentar tomar la comida
     private void TryTakeFood()
     {
+
+        // Al igual que el método anterior 
         if (isHolding || isPickingUp)
         {
-            Debug.Log("No puedes recoger otro plato mientras sostienes uno o estás recogiendo.");
             return;
         }
 
+        // Detecta si hay comida con la capa foodLayer y el rango de interacción del jugador
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRange, foodLayer);
 
         foreach (var hit in hits)
@@ -133,16 +139,15 @@ public class player : MonoBehaviour
             if (dishComp != null && dishComp.FoodData != null)
             {
                 tempFoodData = dishComp.FoodData;
-                Debug.Log($"Datos de comida asignados correctamente: {tempFoodData.name}");
             }
             else
             {
-                Debug.LogWarning("El plato no tiene datos de comida asignados en Dish.");
                 return;
             }
 
             if (kitchenManager != null) kitchenManager.RemoveOrder(foodPicked);
 
+            // Se inicia la animación de PickUp para tomar comida
             isPickingUp = true;
             anim.SetBool("isPickingUp", isPickingUp);
             Invoke(nameof(EndPickUp), 0.8f);
@@ -152,34 +157,38 @@ public class player : MonoBehaviour
     }
 
 
-
+    // Con este método finaliza la animación de pickUp
     private void EndPickUp()
     {
         isPickingUp = false;
         anim.SetBool("isPickingUp", isPickingUp);
     }
 
-
+    // Coloca la comida en la mano del chef al finalizar pickUp
     private void FinalizePickUp()
     {
         if (tempFoodData == null)
         {
-            Debug.LogWarning("No hay datos de comida para instanciar en las manos.");
             return;
         }
 
         float lastH = anim.GetFloat("lastHorizontal");
         float lastV = anim.GetFloat("lastVertical");
 
+        // Esto determina la posición del plato de comida según la última dirección del jugador
         if (Mathf.Abs(lastH) > Mathf.Abs(lastV))
             currentHandPoint = (lastH > 0) ? dishPositionRight : dishPositionLeft;
         else
             currentHandPoint = (lastV > 0) ? dishPositionUp : dishPositionDown;
 
+        // se crea el objeto de la comida y convertimos en objeto padre (dependiendo de la posición calculada anteriormente)
+        // la posición en la que debe ir el plato de comida
         GameObject newFood = new GameObject("FoodInHand");
         newFood.transform.SetParent(currentHandPoint);
         newFood.transform.localPosition = Vector3.zero;
 
+        // Con esto controlamos en que capa se renderiza el plato, en nuestro caso la hemos puesto
+        // en la capa foreground y en el sortingorder de 1 como el resto de objetos para que se vea bien
         SpriteRenderer sr = newFood.AddComponent<SpriteRenderer>();
         sr.sprite = tempFoodData.dishSprite;
         sr.sortingLayerName = "Foreground";
@@ -196,6 +205,7 @@ public class player : MonoBehaviour
         tempFoodData = null;
     }
 
+    // Este método sirve para ver en tiempo real (update) la forma en la que se ve el plato dependiendo de la dirección del chef
     private void UpdateHoldPosition()
     {
         float lastH = anim.GetFloat("lastHorizontal");
@@ -204,6 +214,7 @@ public class player : MonoBehaviour
 
         Transform targetPoint;
 
+        // si no se mueve por defecto el plato lo posicionamos delante del chef
         if (!isMoving)
         {
             targetPoint = dishPositionDown;
@@ -225,11 +236,14 @@ public class player : MonoBehaviour
         }
     }
 
+    // Método que sirve para la lógica de entregar comida
     private void TryDeliverFood()
     {
+        // Si no está "holdeando" la comida o directamente no tiene comida, este método no tiene efecto alguno
         if (!isHolding || food == null)
             return;
 
+        // nuevamente se detecta si el jugador está cerca de un cliente
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRange, clientLayer);
 
         foreach (var hit in hits)
@@ -239,7 +253,6 @@ public class player : MonoBehaviour
 
             if (client.assignedTableTransform == null)
             {
-                Debug.LogWarning($"El cliente {client.name} no tiene mesa al intentar entregar. Se cancelará entrega.");
                 Destroy(food);
                 food = null;
                 isHolding = false;
@@ -250,10 +263,10 @@ public class player : MonoBehaviour
             Dish holdDishComp = food.GetComponent<Dish>();
             if (holdDishComp == null || holdDishComp.FoodData == null)
             {
-                Debug.LogWarning("El plato en mano no tiene datos de comida válidos.");
                 return;
             }
 
+            // Se verifica si el plato coincide con la orden del cliente
             if (client.HasOrder() && AreFoodsEquivalent(holdDishComp.FoodData, client.GetCurrentOrder()))
             {
                 bool placed = PlaceDishOnTable(client, holdDishComp.FoodData);
@@ -265,12 +278,9 @@ public class player : MonoBehaviour
                     food = null;
                     isHolding = false;
                     anim.SetBool("isHolding", false);
-
-                    Debug.Log($"✅ Plato '{holdDishComp.FoodData.name}' entregado correctamente a {client.name}");
                 }
                 else
                 {
-                    Debug.LogWarning($"No se pudo colocar el plato para {client.name} (posible salida). Plato destruido.");
                     Destroy(food);
                     food = null;
                     isHolding = false;
@@ -278,32 +288,24 @@ public class player : MonoBehaviour
                 }
                 return;
             }
-            else
-            {
-                Debug.Log($"❌ El cliente {client.name} pidió {(client.GetCurrentOrder() != null ? client.GetCurrentOrder().name : "nada")}, pero tienes {holdDishComp.FoodData.name}");
-            }
         }
     }
 
+    // Este método verifica si el plato que entregamos es el mismo que pide el cliente, a través de su ID
     private bool AreFoodsEquivalent(Food a, Food b)
     {
+        // Evitamos errores si alguno está vacío
         if (a == null || b == null)
             return false;
 
+        // verificamos si el id de ambas comidas es igual, si es igual no es necesario continuar
         if (!string.IsNullOrEmpty(a.id) && !string.IsNullOrEmpty(b.id))
             return a.id.Trim().ToLower() == b.id.Trim().ToLower();
-
-        if (!string.IsNullOrEmpty(a.name) && !string.IsNullOrEmpty(b.name))
-            return a.name.Trim().ToLower() == b.name.Trim().ToLower();
-
-        if (a.dishSprite != null && b.dishSprite != null && a.dishSprite == b.dishSprite)
-            return true;
 
         return false;
     }
 
-
-
+    // Este método implementa la lógica de la basura
     private void TryDiscardDish()
     {
         if (!isHolding || food == null)
@@ -315,8 +317,11 @@ public class player : MonoBehaviour
         {
             if (hit.CompareTag("Trash"))
             {
+                // destruimos la comida que tenemos en mano
                 Destroy(food);
                 food = null;
+
+                // desactivamos la animación de holdear el plato
                 isHolding = false;
                 anim.SetBool("isHolding", false);
                 return;
@@ -324,37 +329,38 @@ public class player : MonoBehaviour
         }
     }
 
-
+    // Método para colocar la comida en la mesa del cliente dependiendo de la posición del mismo
     private bool PlaceDishOnTable(ClientBehavior client, Food foodData)
     {
+        // Se verifica si el cliente no está vacío
         if (client == null)
         {
-            Debug.LogWarning("PlaceDishOnTable: client == null");
             return false;
         }
 
+        // Se verifica si tiene mesa
         Transform tableTransform = client.assignedTableTransform;
         if (tableTransform == null)
         {
-            Debug.LogWarning($"PlaceDishOnTable: El cliente {client.name} no tiene mesa asignada.");
             return false;
         }
 
+        // Buscamos los puntos de las mesas
         Transform leftPoint = tableTransform.Find("dishPointLeft");
         Transform rightPoint = tableTransform.Find("dishPointRight");
 
+        // Si no hay puntos sobre donde poner los platos se retorna falso
         if (leftPoint == null && rightPoint == null)
         {
-            Debug.LogWarning($"La mesa de {client.name} no tiene dishPoints asignados.");
             return false;
         }
 
+        // Si encuentra determinamos el punto donde hay que colocar el plato dependiendo de la posición del cliente
         Transform chosenPoint = (client.seatSide == ClientBehavior.SeatSide.Left) ? leftPoint : rightPoint;
 
         if (chosenPoint == null)
         {
             chosenPoint = leftPoint ?? rightPoint ?? tableTransform;
-            Debug.LogWarning($"No se encontró el dishPoint exacto para {client.name}, usando fallback '{chosenPoint.name}'.");
         }
 
         GameObject servedDish = null;
@@ -364,16 +370,15 @@ public class player : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"Error instanciando el plato: {e.Message}");
             return false;
         }
 
         if (servedDish == null)
         {
-            Debug.LogWarning("PlaceDishOnTable: failed to Instantiate servedDish.");
             return false;
         }
 
+        // Configuramos la capa de renderizado de los platos para que se puedan ver por encima de las mesas
         SpriteRenderer servedSr = servedDish.GetComponent<SpriteRenderer>();
         if (servedSr != null)
         {
@@ -393,20 +398,18 @@ public class player : MonoBehaviour
         else
             dishComp.exitPoint = null;
 
+        // Se informa al clientSatisfaction que el cliente ya empezó a comer
         client.GetComponent<ClientSatisfaction>()?.OnStartEating();
         dishComp.StartEatingRoutine();
-
-        Debug.Log($"🍽️ Plato '{foodData.name}' colocado correctamente en la mesa de {client.name}");
 
         return true;
     }
 
+    // Con este método el chef intentará pillar dinero de las mesas
     private void TryCollectMoney()
     {
-        float radius = interactionRange;
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRange);
 
-        bool foundTable = false;
         bool collectedMoney = false;
 
         for (int hi = 0; hi < hits.Length; hi++)
@@ -415,7 +418,6 @@ public class player : MonoBehaviour
             if (!hit.CompareTag("Table"))
                 continue;
 
-            foundTable = true;
             Transform table = hit.transform;
 
             Transform leftPoint = table.Find("moneyPointLeft");
@@ -423,10 +425,12 @@ public class player : MonoBehaviour
 
             int totalCollected = 0;
 
+            // Primero procesamos el dinero del lado izquierdo
             if (leftPoint != null)
             {
                 int childCount = leftPoint.childCount;
                 Transform[] childs = new Transform[childCount];
+                // Con estos dos bucles miramos si hay dinero de este lado
                 for (int i = 0; i < childCount; i++)
                     childs[i] = leftPoint.GetChild(i);
 
@@ -448,9 +452,11 @@ public class player : MonoBehaviour
 
                     Vector3 spawnPos = new Vector3(moneyWorldPos.x, moneyWorldPos.y + 0.01f, moneyWorldPos.z);
 
+                    // reproducimos el audio CashRegister
                     if (SoundsManager.Instance != null)
                         SoundsManager.Instance.PlaySound("CashRegister");
 
+                    // Colocamos el efecto del texto flotante temporal con la cantidad de dinero que recibimos de este lado
                     if (GameManager.Instance != null && GameManager.Instance.floatingTextPrefab != null)
                     {
                         GameObject floatTxtGO = Instantiate(GameManager.Instance.floatingTextPrefab, spawnPos, Quaternion.identity);
@@ -463,20 +469,11 @@ public class player : MonoBehaviour
                         {
                             ft.Initialize($"+ ${m.amount}", Color.green, spawnPos, 0.7f, 1.0f);
                         }
-                        else
-                        {
-                            Debug.LogWarning("FloatingText component no encontrado en prefab instanciado.");
-                        }
-
-                        Debug.Log($"[MoneyCollect] MoneyDrop pos: {moneyWorldPos} -> FloatingText pos after instantiate: {floatTxtGO.transform.position}");
-                    }
-                    else
-                    {
-                        Debug.LogWarning("GameManager.Instance.floatingTextPrefab no asignado.");
                     }
                 }
             }
 
+            // Hacemos lo mismo con el lado derecho
             if (rightPoint != null)
             {
                 int childCount2 = rightPoint.childCount;
@@ -516,16 +513,6 @@ public class player : MonoBehaviour
                         {
                             ft.Initialize($"+ ${m.amount}", Color.green, spawnPos, 0.7f, 1.0f);
                         }
-                        else
-                        {
-                            Debug.LogWarning("FloatingText component no encontrado en prefab instanciado.");
-                        }
-
-                        Debug.Log($"[MoneyCollect] MoneyDrop pos: {moneyWorldPos} -> FloatingText pos after instantiate: {floatTxtGO.transform.position}");
-                    }
-                    else
-                    {
-                        Debug.LogWarning("GameManager.Instance.floatingTextPrefab no asignado.");
                     }
                 }
             }
@@ -533,18 +520,11 @@ public class player : MonoBehaviour
             if (collectedMoney && totalCollected > 0)
             {
                 GameManager.Instance.AddMoney(totalCollected);
-                Debug.Log($"💰 El chef recogió {totalCollected}$ de la mesa '{table.name}'.");
             }
         }
-
-        if (!foundTable)
-            Debug.Log("⚠ No hay ninguna mesa dentro del rango de interacción.");
-        else if (!collectedMoney)
-            Debug.Log("💨 No hay dinero en los moneyPoints de la mesa.");
     }
 
-
-
+    // Movimientos fijos físicos del jugador
     void FixedUpdate()
     {
         if (isPickingUp) return;

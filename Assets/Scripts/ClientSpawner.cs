@@ -56,7 +56,6 @@ public class ClientSpawner : MonoBehaviour
             else
             {
                 resting = true;
-                Debug.Log("😌 Restaurante lleno, tomando un descanso de spawn...");
                 yield return new WaitForSeconds(restTime);
                 resting = false;
             }
@@ -108,10 +107,14 @@ public class ClientSpawner : MonoBehaviour
     public void NotifyClientSeated(GameObject client)
     {
         if (spawned.Contains(client))
+        {
             spawned.Remove(client);
+        }
 
-        ReorderQueue();
+        if (spawned.Count > 0)
+            ReorderQueue();
     }
+
 
     public void NotifyClientLeft(GameObject client)
     {
@@ -119,7 +122,6 @@ public class ClientSpawner : MonoBehaviour
             spawned.Remove(client);
 
         currentClients = Mathf.Max(0, currentClients - 1);
-        Debug.Log($"🚪 Cliente salió → Total actual: {currentClients}/{maxClients}");
 
         ReorderQueue();
         AdvanceQueueIfFrontAvailable();
@@ -135,19 +137,21 @@ public class ClientSpawner : MonoBehaviour
         for (int i = 0; i < spawned.Count; i++)
         {
             GameObject c = spawned[i];
-            if (c != null)
-            {
-                ClientBehavior behavior = c.GetComponent<ClientBehavior>();
-                if (behavior != null)
-                {
-                    Vector3 newPos = GetWaitingPosition(i);
-                    yield return new WaitForSeconds(0.05f);
+            if (c == null) continue;
 
-                    behavior.MoveTo(newPos);
-                }
-            }
+            ClientBehavior behavior = c.GetComponent<ClientBehavior>();
+            if (behavior == null) continue;
+
+            if (behavior.assignedTable != null || behavior.assignedSeat != null)
+                continue;
+
+            Vector3 newPos = GetWaitingPosition(i);
+            yield return new WaitForSeconds(0.05f);
+
+            behavior.MoveTo(newPos);
         }
     }
+
 
     public void AdvanceQueueIfFrontAvailable()
     {
@@ -157,23 +161,23 @@ public class ClientSpawner : MonoBehaviour
         if (firstClient == null) return;
 
         ClientBehavior behavior = firstClient.GetComponent<ClientBehavior>();
-        if (behavior != null)
+        if (behavior != null && behavior.assignedTable == null && behavior.assignedSeat == null)
             behavior.MoveTo(waitingPoint.position);
 
         for (int i = 1; i < spawned.Count; i++)
         {
             GameObject c = spawned[i];
-            if (c != null)
+            if (c == null) continue;
+
+            ClientBehavior b = c.GetComponent<ClientBehavior>();
+            if (b != null && b.assignedTable == null && b.assignedSeat == null)
             {
-                ClientBehavior b = c.GetComponent<ClientBehavior>();
-                if (b != null)
-                {
-                    Vector3 newPos = GetWaitingPosition(i);
-                    b.MoveTo(newPos);
-                }
+                Vector3 newPos = GetWaitingPosition(i);
+                b.MoveTo(newPos);
             }
         }
     }
+
 
 
     public void StopSpawning() => canSpawn = false;
@@ -188,6 +192,5 @@ public class ClientSpawner : MonoBehaviour
     public void ResetDifficulty()
     {
         difficultyProgress = 0f;
-        Debug.Log("🔄 Dificultad reiniciada a fácil.");
     }
 }

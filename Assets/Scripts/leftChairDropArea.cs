@@ -4,18 +4,21 @@ public class leftChairDropArea : MonoBehaviour, Table
 {
     [SerializeField] private Vector3 sitOffset = Vector3.zero;
     [SerializeField] private Transform parentTable;
+    public Transform TableTransform => parentTable;
+    public bool IsOccupied { get; private set; } = false;
 
     public void OnClientDrop(ClientBehavior client)
     {
-        if (parentTable == null)
+        if (parentTable == null) return;
+
+        if (IsOccupied)
         {
-            Debug.LogWarning($"⚠ La silla izquierda de {name} no tiene mesa asignada.");
+            client.ReturnToWaitingPoint();
             return;
         }
 
         if (HasMoneyOnTable(parentTable))
         {
-            Debug.LogWarning($"🪙 La mesa '{parentTable.name}' tiene dinero, el cliente {client.name} no puede sentarse aún.");
             client.ReturnToWaitingPoint();
             return;
         }
@@ -24,6 +27,9 @@ public class leftChairDropArea : MonoBehaviour, Table
         client.SitDown("sitLeft", this);
         client.seatSide = ClientBehavior.SeatSide.Left;
         client.assignedTableTransform = parentTable;
+        client.assignedSeat = this;
+        IsOccupied = true;
+
     }
 
     private bool HasMoneyOnTable(Transform table)
@@ -31,5 +37,10 @@ public class leftChairDropArea : MonoBehaviour, Table
         Transform left = table.Find("moneyPointLeft");
         Transform right = table.Find("moneyPointRight");
         return (left != null && left.childCount > 0) || (right != null && right.childCount > 0);
+    }
+
+    public void FreeSeat()
+    {
+        IsOccupied = false;
     }
 }

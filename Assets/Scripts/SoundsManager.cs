@@ -39,6 +39,7 @@ public class SoundsManager : MonoBehaviour
         musicSource.playOnAwake = false;
     }
 
+    // Método para reproducir un sonindo con el nombre del clip
     public void PlaySound(string name)
     {
         if (clipsDict.TryGetValue(name, out AudioClip clip))
@@ -46,7 +47,8 @@ public class SoundsManager : MonoBehaviour
             audioSource.PlayOneShot(clip);
         }
     }
-
+    
+    // Método para reproducir música con el nombre del clip
     public void PlayMusic(string name)
     {
         if (clipsDict.TryGetValue(name, out AudioClip clip))
@@ -60,18 +62,21 @@ public class SoundsManager : MonoBehaviour
         }
     }
 
+    // Método para reducir el volumen de la música
     public void ReduceVolume(string name)
     {
         if (musicSource.isPlaying && musicSource.clip != null && musicSource.clip.name == name)
             musicSource.volume = 0.3f;
     }
 
+    // Método para restaurar el volumen normal de la música
     public void RestoreVolume(string name)
     {
         if (musicSource.isPlaying && musicSource.clip != null && musicSource.clip.name == name)
             musicSource.volume = 1f;
     }
 
+    // Método para parar la música por completo
     public void StopMusic(string name)
     {
         if (musicSource.isPlaying && musicSource.clip != null && musicSource.clip.name == name)

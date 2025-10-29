@@ -1106,7 +1106,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HOME
+  m_text: INICI
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 224832043f1feb1409666e164b9a0463, type: 2}
   m_sharedMaterial: {fileID: -1523871664365532425, guid: 224832043f1feb1409666e164b9a0463, type: 2}
@@ -4334,7 +4334,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GAME PAUSED
+  m_text: JOC EN PAUSA
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 224832043f1feb1409666e164b9a0463, type: 2}
   m_sharedMaterial: {fileID: -1523871664365532425, guid: 224832043f1feb1409666e164b9a0463, type: 2}
@@ -4361,8 +4361,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 52
-  m_fontSizeBase: 52
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4486,7 +4486,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Resume
+  m_text: Reprendre
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 224832043f1feb1409666e164b9a0463, type: 2}
   m_sharedMaterial: {fileID: -1523871664365532425, guid: 224832043f1feb1409666e164b9a0463, type: 2}
@@ -4518,7 +4518,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 50
   m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -10975,6 +10975,10 @@ PrefabInstance:
       propertyPath: dishPositionLeft
       value: 
       objectReference: {fileID: 1426355933}
+    - target: {fileID: 8098263207942394676, guid: c4733e9dab38816458b08e3fe5c524cc, type: 3}
+      propertyPath: interactionRange
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8098263207942394676, guid: c4733e9dab38816458b08e3fe5c524cc, type: 3}
       propertyPath: dishPositionRight
       value: 

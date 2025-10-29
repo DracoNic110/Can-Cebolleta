@@ -1824,7 +1824,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: QUIT
+  m_text: Sortir
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 224832043f1feb1409666e164b9a0463, type: 2}
   m_sharedMaterial: {fileID: -1523871664365532425, guid: 224832043f1feb1409666e164b9a0463, type: 2}
@@ -1856,7 +1856,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 70
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -2038,7 +2038,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PLAY
+  m_text: Jugar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 224832043f1feb1409666e164b9a0463, type: 2}
   m_sharedMaterial: {fileID: -1523871664365532425, guid: 224832043f1feb1409666e164b9a0463, type: 2}
@@ -3083,7 +3083,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Settings
+  m_text: Configuracions
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 224832043f1feb1409666e164b9a0463, type: 2}
   m_sharedMaterial: {fileID: -1523871664365532425, guid: 224832043f1feb1409666e164b9a0463, type: 2}
@@ -3115,7 +3115,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 55
   m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

@@ -47,12 +47,15 @@ public class Timer : MonoBehaviour
 
     private IEnumerator ShowStarsRoutine(int numStars)
     {
+        numStars = Mathf.Clamp(numStars, 0, Stars.Length);
 
         for (int i = 0; i < numStars; i++)
         {
             yield return StartCoroutine(EnlargeAndShrinkStar(Stars[i]));
         }
     }
+
+
     public void ShowStars(int numStars)
     {
         StartCoroutine(ShowStarsRoutine(numStars));

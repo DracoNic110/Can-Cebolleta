@@ -18,15 +18,12 @@ public class KitchenManager : MonoBehaviour
 
         if (spawnPoint == null)
         {
-            Debug.LogWarning("No hay puntos de spawn disponibles para un nuevo pedido.");
             return;
         }
         CookingOrder order = new CookingOrder(food, spawnPoint);
         activeOrders.Add(order);
 
         StartCoroutine(CookRoutine(order));
-
-        Debug.Log($"Pedido recibido: {food.name}");
     }
 
     private IEnumerator CookRoutine(CookingOrder order)
@@ -35,8 +32,6 @@ public class KitchenManager : MonoBehaviour
             order.food.minCookTime > 0 ? order.food.minCookTime : defaultMinCookTime,
             order.food.maxCookTime > 0 ? order.food.maxCookTime : defaultMaxCookTime
         );
-
-        Debug.Log($"Cocinando {order.food.name} durante {cookTime:F1} segundos...");
         yield return new WaitForSeconds(cookTime);
 
         GameObject foodObj = Instantiate(foodPrefab, order.spawnPoint.position, Quaternion.identity);
@@ -52,8 +47,6 @@ public class KitchenManager : MonoBehaviour
 
         order.ready = true;
         order.instance = foodObj;
-
-        Debug.Log($"Pedido listo: {order.food.name}");
     }
 
 
@@ -84,7 +77,6 @@ public class KitchenManager : MonoBehaviour
         {
             if (activeOrders[i].instance == foodObj)
             {
-                Debug.Log($"Pedido {activeOrders[i].food.name} retirado de la barra.");
                 Destroy(foodObj);
                 activeOrders.RemoveAt(i);
             }
