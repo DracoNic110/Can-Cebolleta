@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     [Header("Economía Global")]
     public int totalMoney = 0;
     public int quotaToReach = 150;
-    public int score = 0;
 
     [Header("Prefabs FX")]
     public GameObject floatingTextPrefab;
@@ -45,7 +44,7 @@ public class GameManager : MonoBehaviour
             moneyText.text = $"Money: {totalMoney}";
         if (quotaText != null)
             quotaText.text = $"Quota: {quotaToReach}";
-        score = Mathf.RoundToInt(totalMoney / quotaToReach * 5);
+        
 
     }
 
