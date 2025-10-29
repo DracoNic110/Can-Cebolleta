@@ -10976,6 +10976,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1426355933}
     - target: {fileID: 8098263207942394676, guid: c4733e9dab38816458b08e3fe5c524cc, type: 3}
+      propertyPath: interactionRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098263207942394676, guid: c4733e9dab38816458b08e3fe5c524cc, type: 3}
       propertyPath: dishPositionRight
       value: 
       objectReference: {fileID: 1941661001}
