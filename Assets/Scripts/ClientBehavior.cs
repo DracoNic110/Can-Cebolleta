@@ -184,7 +184,6 @@ public class ClientBehavior : MonoBehaviour
 
     public void ReturnToWaitingPoint()
     {
-        Debug.Log($"⏳ {name} regresa a su punto de espera (mesa ocupada con dinero).");
         transform.position = waitPositionClient;
         isWaiting = true;
         isDragging = false;
@@ -225,7 +224,6 @@ public class ClientBehavior : MonoBehaviour
             }
 
             hasOrdered = true;
-            Debug.Log($"{this.name} ha pedido: {CurrentOrder.name}");
         }
     }
 
@@ -285,7 +283,6 @@ public class ClientBehavior : MonoBehaviour
 
         if (aiPath == null || destSetter == null)
         {
-            Debug.LogWarning($"{name} no tiene los componentes necesarios para moverse con A* Pathfinding.");
             return;
         }
 

@@ -18,7 +18,6 @@ public class FloatingText : MonoBehaviour
             textMesh = GetComponent<TextMeshPro>();
 
         if (textMesh == null)
-            Debug.LogError("FloatingText: no TextMeshPro encontrado. Usa TextMeshPro (3D) en el prefab.");
 
         startColor = textMesh != null ? textMesh.color : Color.green;
     }
@@ -27,7 +26,6 @@ public class FloatingText : MonoBehaviour
     {
         if (textMesh == null)
         {
-            Debug.LogWarning("FloatingText.Initialize: no textMesh asignado.");
             return;
         }
 

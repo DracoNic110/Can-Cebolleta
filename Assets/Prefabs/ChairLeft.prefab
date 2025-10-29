@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2993948073641917329}
   m_Layer: 3
   m_Name: DropChairLeft
-  m_TagString: Untagged
+  m_TagString: Table
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,7 +67,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -3.5035708, y: -0.6020558}
+  m_Offset: {x: -3.5106015, y: -0.88743913}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -77,7 +77,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.8541827, y: 1.5751143}
+  m_Size: {x: 4.970812, y: 3.19962}
   m_EdgeRadius: 0
 --- !u!114 &2993948073641917329
 MonoBehaviour:
@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::leftChairDropArea
   sitOffset: {x: -3.5, y: -0.4, z: 0}
+  parentTable: {fileID: 0}
 --- !u!1 &4376997505823288022
 GameObject:
   m_ObjectHideFlags: 0

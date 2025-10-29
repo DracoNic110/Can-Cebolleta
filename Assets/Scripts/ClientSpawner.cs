@@ -56,7 +56,6 @@ public class ClientSpawner : MonoBehaviour
             else
             {
                 resting = true;
-                Debug.Log("😌 Restaurante lleno, tomando un descanso de spawn...");
                 yield return new WaitForSeconds(restTime);
                 resting = false;
             }
@@ -119,7 +118,6 @@ public class ClientSpawner : MonoBehaviour
             spawned.Remove(client);
 
         currentClients = Mathf.Max(0, currentClients - 1);
-        Debug.Log($"🚪 Cliente salió → Total actual: {currentClients}/{maxClients}");
 
         ReorderQueue();
         AdvanceQueueIfFrontAvailable();
@@ -188,6 +186,5 @@ public class ClientSpawner : MonoBehaviour
     public void ResetDifficulty()
     {
         difficultyProgress = 0f;
-        Debug.Log("🔄 Dificultad reiniciada a fácil.");
     }
 }

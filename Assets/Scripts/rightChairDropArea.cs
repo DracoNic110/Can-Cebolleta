@@ -9,13 +9,11 @@ public class rightChairDropArea : MonoBehaviour, Table
     {
         if (parentTable == null)
         {
-            Debug.LogWarning($"⚠ La silla derecha de {name} no tiene mesa asignada.");
             return;
         }
 
         if (HasMoneyOnTable(parentTable))
         {
-            Debug.LogWarning($"🪙 La mesa '{parentTable.name}' tiene dinero, el cliente {client.name} no puede sentarse aún.");
             client.ReturnToWaitingPoint();
             return;
         }

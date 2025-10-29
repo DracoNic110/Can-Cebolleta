@@ -59,7 +59,6 @@ public class ClientSatisfaction : MonoBehaviour
             if (currentTimer >= maxWaitTime)
             {
                 clientLost = true;
-                Debug.Log($"❌ {name} se enfadó durante {currentState} tras {currentTimer:F1}s.");
                 MakeClientLeaveAngry();
             }
         }
@@ -119,11 +118,8 @@ public class ClientSatisfaction : MonoBehaviour
         float percent = GetPercentFromAverage(avg);
         float reward = basePrice * percent;
 
-        Debug.Log($"💵 {name} paga ${reward:F2} (promedio {avg:F2}s -> {percent * 100:F0}%)");
-
         if (reward <= 0f)
         {
-            Debug.Log($"{name} no deja dinero (reward 0).");
             return;
         }
 
@@ -132,7 +128,6 @@ public class ClientSatisfaction : MonoBehaviour
 
         if (moneyPoint == null)
         {
-            Debug.LogWarning($"{name} no tiene moneyPoint asignado.");
             return;
         }
 
@@ -171,8 +166,6 @@ public class ClientSatisfaction : MonoBehaviour
             client.LeaveRestaurant(exit.transform.position);
         else
             client.LeaveRestaurant(client.transform.position + Vector3.right * 5f);
-
-        Debug.Log($"😀 {name} terminó de comer y se va feliz del restaurante.");
     }
 
 
@@ -220,7 +213,6 @@ public class ClientSatisfaction : MonoBehaviour
         else
         {
             moneyPoint = moneyPointLeft ?? moneyPointRight;
-            Debug.LogWarning($"⚠ {name}: No se pudo determinar lado -> usando moneyPoint por defecto.");
         }
     }
 
