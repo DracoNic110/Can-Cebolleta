@@ -102,6 +102,14 @@ public class ClientBehavior : MonoBehaviour
         targetPosition = waitPosition;
         waitPositionClient = waitPosition;
 
+        CurrentOrder = null;
+        hasOrdered = false;
+        orderTaken = false;
+        isSeated = false;
+        isLeaving = false;
+        isWaiting = false;
+        orderBalloon?.SetActive(false);
+
         // desactivamos el pathfinding
         var aiPath = GetComponent<AIPath>();
         var destSetter = GetComponent<AIDestinationSetter>();
@@ -242,6 +250,12 @@ public class ClientBehavior : MonoBehaviour
         isWaiting = true;
         isDragging = false;
         anim?.SetBool("isWalking", false);
+
+        // Evitar pedidos antiguos
+        hasOrdered = false;
+        orderTaken = false;
+        CurrentOrder = null;
+        orderBalloon?.SetActive(false);
     }
 
     // Emplea la lógica con la cuál el cliente se sienta
@@ -300,9 +314,15 @@ public class ClientBehavior : MonoBehaviour
     }
 
     // Métodos para verificar el estado de la orden del pedido
-    public bool IsReadyToTakeOrder() => hasOrdered && CurrentOrder != null && !orderTaken;
+    public bool IsReadyToTakeOrder() => isSeated && hasOrdered && CurrentOrder != null && !orderTaken;
     public bool HasOrder() => CurrentOrder != null;
     public bool IsOrderTaken() => orderTaken;
+
+    // Método que sirve para verificar que el estado en el que está el cliente pueda recibir comida
+    public bool CanReceiveFood()
+    {
+        return isSeated && hasOrdered && orderTaken && !isLeaving && assignedTableTransform != null;
+    }
 
     // Obtenemos la orden del cliente
     public Food GetCurrentOrder() => CurrentOrder;

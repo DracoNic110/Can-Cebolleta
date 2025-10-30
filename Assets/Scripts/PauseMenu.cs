@@ -46,7 +46,6 @@ public class PauseMenu : MonoBehaviour
 
         if (SoundsManager.Instance != null) {
             SoundsManager.Instance.StopMusic("Le Grand Chase");
-            SoundsManager.Instance.PlayMusic("Hackbeat");
         }
     }
 
