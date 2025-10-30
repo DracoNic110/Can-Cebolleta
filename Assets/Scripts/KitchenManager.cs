@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// Gestiona la cocina del restaurante
 public class KitchenManager : MonoBehaviour
 {
     [Header("Cocina")]
@@ -12,6 +13,7 @@ public class KitchenManager : MonoBehaviour
 
     private List<CookingOrder> activeOrders = new List<CookingOrder>();
 
+    // Inicia la preparación de una orden de comida.
     public void PrepareOrder(Food food)
     {
         Transform spawnPoint = GetAvailableSpawnPoint();
@@ -26,6 +28,7 @@ public class KitchenManager : MonoBehaviour
         StartCoroutine(CookRoutine(order));
     }
 
+    // Rutina para cocinar una orden
     private IEnumerator CookRoutine(CookingOrder order)
     {
         float cookTime = Random.Range(
@@ -49,7 +52,7 @@ public class KitchenManager : MonoBehaviour
         order.instance = foodObj;
     }
 
-
+    // Método para aignar un spawnPoint para el pedido
     private Transform GetAvailableSpawnPoint()
     {
         foreach (Transform point in spawnPoints)
@@ -71,6 +74,8 @@ public class KitchenManager : MonoBehaviour
         return null;
     }
 
+
+    // Elimina un plato de la cocina
     public void RemoveOrder(GameObject foodObj)
     {
         for (int i = activeOrders.Count - 1; i >= 0; i--)

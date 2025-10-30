@@ -1,5 +1,7 @@
 using UnityEngine;
 
+
+// Representa una comida dentro del juego, de manera que tenga dos sprites (de pedido y de plato), un nombre y un identificador
 [System.Serializable]
 public class Food
 {

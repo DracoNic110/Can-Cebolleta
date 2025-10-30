@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
+// Script que gestiona el efecto de texto flotante del dinero cuando se recoge
 public class FloatingText : MonoBehaviour
 {
     public float floatDistance = 0.7f; 
@@ -12,6 +13,7 @@ public class FloatingText : MonoBehaviour
     private Vector3 startPos;
     private Vector3 targetPos;
 
+    // Asignamos el objeto textMeshPro
     private void Awake()
     {
         if (textMesh == null)
@@ -22,6 +24,7 @@ public class FloatingText : MonoBehaviour
         startColor = textMesh != null ? textMesh.color : Color.green;
     }
 
+    // Inicializamos el componente de texto con todas las propiedades que se necesitan para el efecto
     public void Initialize(string text, Color color, Vector3 worldPosition, float distance = 0.7f, float life = 1.0f)
     {
         if (textMesh == null)
@@ -42,6 +45,7 @@ public class FloatingText : MonoBehaviour
         StartCoroutine(FloatAndFadeRoutine());
     }
 
+    // Rutina que simula la animación del texto flotando hacia arriba
     private IEnumerator FloatAndFadeRoutine()
     {
         float elapsed = 0f;

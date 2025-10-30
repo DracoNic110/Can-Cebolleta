@@ -276,15 +276,19 @@ public class ClientBehavior : MonoBehaviour
         isSeated = true;
     }
 
+    // Lógica para ver los pedidos del cliente
     private IEnumerator GiveOrder()
     {
+        // se espera un tiempo aleatorio defindido para pedir la orden
         float waitTime = Random.Range(thinkingOrderIntervalStart, thinkingOrderIntervalEnd);
         yield return new WaitForSeconds(waitTime);
 
+        // escogemos la comida que va a pedir el cliente
         if (possibleFoods.Count > 0)
         {
             CurrentOrder = possibleFoods[Random.Range(0, possibleFoods.Count)];
 
+            // activamos el globito del pedido
             if (CurrentOrder != null && foodRenderer != null)
             {
                 orderBalloon.SetActive(true);
@@ -295,21 +299,28 @@ public class ClientBehavior : MonoBehaviour
         }
     }
 
+    // Métodos para verificar el estado de la orden del pedido
     public bool IsReadyToTakeOrder() => hasOrdered && CurrentOrder != null && !orderTaken;
     public bool HasOrder() => CurrentOrder != null;
     public bool IsOrderTaken() => orderTaken;
+
+    // Obtenemos la orden del cliente
     public Food GetCurrentOrder() => CurrentOrder;
+
+    // Cuando se acepta el pedido de un cliente utilizamos este método para cambiar de estado a WaitingFood
     public void MarkOrderTaken()
     {
         orderTaken = true;
         satisfaction?.OnStateChange("WaitingFood");
     }
-
+    
+    // Método que indica que el pedido ha llegado al cliente y le avisa al ClientSatisfaction que está comiendo
     public void OnDishPlaced()
     {
         satisfaction?.OnStartEating();
     }
 
+    // Oscila el sprite entre los sprites normales y enrojecerlos para el efecto de enjoarse del cliente
     public IEnumerator changeAngry()
     {
         float duration = 1.0f;
@@ -322,6 +333,7 @@ public class ClientBehavior : MonoBehaviour
         }
     }
 
+    // Este método indica el momento en la que empezar la rutina de enojarse del cliente
     public void StartAngryEffect()
     {
         if (isAngry) return;
@@ -329,6 +341,7 @@ public class ClientBehavior : MonoBehaviour
         angryCoroutine = StartCoroutine(changeAngry());
     }
 
+    // Cuando ya es atendido un cliente que estaba enojado, para desactivar el efecto tenemos este método para restaurar su color original
     public void StopAngryEffect()
     {
         if (angryCoroutine != null)
@@ -343,7 +356,8 @@ public class ClientBehavior : MonoBehaviour
             sr.color = originalColor;
     }
 
-
+    // Con este método realizamos la lógica de irse del restaurante, activando el pathfinding y liberamos los asientos
+    // par que otros clientes puedan sentarse en la silla que se sentó este cliente
     public void LeaveRestaurant(Vector3 exitPosition)
     {
         var aiPath = GetComponent<AIPath>();
@@ -386,7 +400,7 @@ public class ClientBehavior : MonoBehaviour
         StartCoroutine(CheckIfArrived(exitTarget.transform));
     }
 
-
+    // Método que veifica si el cliente ha llegado al exitPoint, de modo que si llega notificamos al spawner y destruimos este objeto
     private IEnumerator CheckIfArrived(Transform target)
     {
         var aiPath = GetComponent<AIPath>();
@@ -406,7 +420,8 @@ public class ClientBehavior : MonoBehaviour
     }
 
 
-
+    // Convertimos la posición del ratón para que se pueda adaptar al mundo 2D
+    // por eso congelamos la profundidad Z y retornamos la posición del ratón
     private Vector3 GetMouseWorldPos()
     {
         Vector3 p = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -414,6 +429,7 @@ public class ClientBehavior : MonoBehaviour
         return p;
     }
 
+    // Actualiza el movimiento del cliente con el pathfinding junto con sus animaciones
     public void Update()
     {
         anim?.SetBool("isDragging", isDragging);
@@ -447,6 +463,7 @@ public class ClientBehavior : MonoBehaviour
         }
     }
 
+    // Actualiza las posiciones de movimiento del cliente
     public void MoveTo(Vector3 newPosition)
     {
         if (isDragging) return;
@@ -462,7 +479,7 @@ public class ClientBehavior : MonoBehaviour
         queueMoveCoroutine = StartCoroutine(MoveToTargetSmooth(newPosition));
     }
 
-
+    // Activamos la animación de caminar hacia algún punto
     private IEnumerator MoveToTargetSmooth(Vector3 newPos)
     {
         if (isDragging) yield break;

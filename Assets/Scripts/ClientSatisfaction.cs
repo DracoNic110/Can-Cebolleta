@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+// Gestiona la satisfacción del cliente relativamente con el servicio que se le dé en el restaurante
 public class ClientSatisfaction : MonoBehaviour
 {
     private ClientBehavior client;
@@ -17,10 +18,11 @@ public class ClientSatisfaction : MonoBehaviour
     [SerializeField] private float maxWaitTime = 30f;
     public float basePrice = 10f;
 
-    [Header("Prefabs (asignar en Inspector)")]
+    [Header("Prefabs")]
     public GameObject coinPilePrefab;
     public GameObject dollarsPrefab;
 
+    [Header("Puntos para dejar el dinero")]
     private Transform moneyPoint;
     private Transform moneyPointLeft;
     private Transform moneyPointRight;
@@ -28,11 +30,13 @@ public class ClientSatisfaction : MonoBehaviour
     private bool clientLost = false;
     private bool hasPaid = false;
 
+    // Obtenemos la refencia del cliente
     private void Awake()
     {
         client = GetComponent<ClientBehavior>();
     }
 
+    // Inicializamos los puntos de dejar el dinero
     private void Start()
     {
         if (client != null && client.assignedTableTransform != null)
@@ -44,6 +48,7 @@ public class ClientSatisfaction : MonoBehaviour
         }
     }
 
+    // Controla los tiempos de espera y controla el enojon del cliente
     private void Update()
     {
         if (clientLost || currentState == ClientState.Leaving)
@@ -64,6 +69,7 @@ public class ClientSatisfaction : MonoBehaviour
         }
     }
 
+    // Cambia el estado del cliente y se registra el tiempo que se ha gastado en atenderlo
     public void OnStateChange(string newState)
     {
         client?.StopAngryEffect();
@@ -96,12 +102,15 @@ public class ClientSatisfaction : MonoBehaviour
         currentTimer = 0f;
     }
 
+    // Es llamado cuando el cliente empiza a comer
     public void OnStartEating()
     {
         client?.StopAngryEffect();
         OnStateChange("Eating");
     }
 
+    // Es llamado cuando el cliente termina de comer para calcular la cantidad de dinero correspondiente
+    // con respecto a la media de tiempo de espera
     public void OnFinishedEating()
     {
         if (clientLost || hasPaid)
@@ -132,7 +141,7 @@ public class ClientSatisfaction : MonoBehaviour
         }
 
         bool spawnBills = percent >= 0.75f;
-
+        // Spawneamos billetes si el servicio fue bueno es decir que tuvo una satisfacción mayor o igual que 0.75
         if (spawnBills && dollarsPrefab != null)
         {
             GameObject bills = Instantiate(dollarsPrefab, moneyPoint.position, dollarsPrefab.transform.rotation);
@@ -146,6 +155,7 @@ public class ClientSatisfaction : MonoBehaviour
         }
         else if (coinPilePrefab != null)
         {
+            // De lo contrario, si la satisfacción está por debajo del 75% (regular), spawneamos una pila de monedas
             GameObject coins = Instantiate(coinPilePrefab, moneyPoint.position, Quaternion.identity);
             coins.transform.SetParent(moneyPoint);
 
@@ -156,6 +166,7 @@ public class ClientSatisfaction : MonoBehaviour
             moneyDrop.amount = Mathf.RoundToInt(basePrice * percent);
         }
 
+        // Marcamos que el cliente ha pagado y está en proceso de irse del restaurante
         hasPaid = true;
         clientLost = false;
         currentState = ClientState.Leaving;
@@ -168,7 +179,7 @@ public class ClientSatisfaction : MonoBehaviour
             client.LeaveRestaurant(client.transform.position + Vector3.right * 5f);
     }
 
-
+    // Obtenemos el porcentaje de satisfacción con respecto a la media de tiempo de espera
     private float GetPercentFromAverage(float avg)
     {
         if (avg <= 7f) return 1f;
@@ -178,6 +189,7 @@ public class ClientSatisfaction : MonoBehaviour
         return 0f;
     }
 
+    // Asignamos un punto de dónde dejar el dinero dependiendo de la dirección en la que el cliente está sentado
     private void AssignMoneyPoint()
     {
         if (client == null || client.assignedTableTransform == null)
@@ -216,7 +228,7 @@ public class ClientSatisfaction : MonoBehaviour
         }
     }
 
-
+    // Hace que el cliente se marche del restaurante enojado cuando se excede el tiempo de espera máximo
     private void MakeClientLeaveAngry()
     {
         if (client != null)
