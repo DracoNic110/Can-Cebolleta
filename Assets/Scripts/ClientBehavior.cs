@@ -21,7 +21,7 @@ public class ClientBehavior : MonoBehaviour
     public SeatSide seatSide;
 
     [Header("Pedido y el globito del pedido")]
-    [SerializeField] private GameObject orderBalloon;
+    [SerializeField] public GameObject orderBalloon;
     [SerializeField] private List<Food> possibleFoods;
     [SerializeField] private float thinkingOrderIntervalStart;
     [SerializeField] private float thinkingOrderIntervalEnd;

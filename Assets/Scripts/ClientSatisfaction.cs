@@ -87,6 +87,7 @@ public class ClientSatisfaction : MonoBehaviour
                 break;
             case ClientState.Eating:
                 currentTimer = 0f;
+                
                 break;
             case ClientState.Leaving:
                 currentTimer = 0f;
@@ -107,6 +108,7 @@ public class ClientSatisfaction : MonoBehaviour
     {
         client?.StopAngryEffect();
         OnStateChange("Eating");
+        client?.orderBalloon.SetActive(false);
     }
 
     // Es llamado cuando el cliente termina de comer para calcular la cantidad de dinero correspondiente

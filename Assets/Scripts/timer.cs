@@ -8,16 +8,21 @@ using System.Runtime.CompilerServices;
 
 public class Timer : MonoBehaviour
 {
-    [Header("Star Ratings")]
-    [SerializeField] GameManager Gmanager;
-    [SerializeField] float score;
 
+    [Header("Game Manager")]
+    [SerializeField] GameManager Gmanager;
+
+    [Header("Star Animation")]
     [SerializeField] Star[] Stars;
     [SerializeField] float EnlargeScale = 1.5f;
     [SerializeField] float ShrinkScale = 1.0f;
     [SerializeField] float EnlargeDuration = 0.25f;
     [SerializeField] float ShrinkDuration = 0.25f;
-    
+
+    [Header("Score")]
+    [SerializeField] float score;
+    [SerializeField] TextMeshProUGUI totalScore;
+
 
     [Header("Timer Display")]
     [SerializeField] TextMeshProUGUI timerText;
@@ -53,6 +58,7 @@ public class Timer : MonoBehaviour
         {
             yield return StartCoroutine(EnlargeAndShrinkStar(Stars[i]));
         }
+        Time.timeScale = 0;
     }
 
 
@@ -84,8 +90,8 @@ public class Timer : MonoBehaviour
             SoundsManager.Instance.PlayMusic("Long Stroll");
         }
         score = calculateScore();
-
         ShowStars(Mathf.RoundToInt(score));
+        totalScore.text = (score * 1000).ToString();
         
     }
 
