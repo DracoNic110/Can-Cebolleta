@@ -107,7 +107,7 @@ public class player : MonoBehaviour
         foreach (var hit in hits)
         {
             ClientBehavior client = hit.GetComponent<ClientBehavior>();
-            if (client != null && client.IsReadyToTakeOrder())
+            if (client != null && client.IsReadyToTakeOrder() && client.assignedTable != null)
             {
                 client.MarkOrderTaken();
 
@@ -239,11 +239,11 @@ public class player : MonoBehaviour
     // Método que sirve para la lógica de entregar comida
     private void TryDeliverFood()
     {
-        // Si no está "holdeando" la comida o directamente no tiene comida, este método no tiene efecto alguno
+        // Si no sostiene comida, no se entrega nada
         if (!isHolding || food == null)
             return;
 
-        // nuevamente se detecta si el jugador está cerca de un cliente
+        // Detectar clientes cerca
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRange, clientLayer);
 
         foreach (var hit in hits)
@@ -251,22 +251,17 @@ public class player : MonoBehaviour
             ClientBehavior client = hit.GetComponent<ClientBehavior>();
             if (client == null) continue;
 
-            if (client.assignedTableTransform == null)
-            {
-                Destroy(food);
-                food = null;
-                isHolding = false;
-                anim.SetBool("isHolding", false);
-                return;
-            }
-
             Dish holdDishComp = food.GetComponent<Dish>();
             if (holdDishComp == null || holdDishComp.FoodData == null)
-            {
                 return;
+
+            if (!client.CanReceiveFood())
+            {
+                // Se ignora el cliente
+                continue;
             }
 
-            // Se verifica si el plato coincide con la orden del cliente
+            // Verificamos si el plato coincide con la orden del cliente
             if (client.HasOrder() && AreFoodsEquivalent(holdDishComp.FoodData, client.GetCurrentOrder()))
             {
                 bool placed = PlaceDishOnTable(client, holdDishComp.FoodData);
@@ -279,17 +274,12 @@ public class player : MonoBehaviour
                     isHolding = false;
                     anim.SetBool("isHolding", false);
                 }
-                else
-                {
-                    Destroy(food);
-                    food = null;
-                    isHolding = false;
-                    anim.SetBool("isHolding", false);
-                }
+
                 return;
             }
         }
     }
+
 
     // Este método verifica si el plato que entregamos es el mismo que pide el cliente, a través de su ID
     private bool AreFoodsEquivalent(Food a, Food b)
