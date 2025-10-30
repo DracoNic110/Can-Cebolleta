@@ -1624,7 +1624,7 @@ MonoBehaviour:
   score: 0
   totalScore: {fileID: 1904525677}
   timerText: {fileID: 935681026}
-  remainingTime: 10
+  remainingTime: 120
   gameOver: 0
   gameOverScreen: {fileID: 1131915446}
 --- !u!114 &519420035
